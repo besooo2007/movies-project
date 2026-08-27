@@ -5,7 +5,12 @@ class CustomButton extends StatelessWidget {
   final String text;
   final VoidCallback onPressed;
   final Widget? image;
-  const CustomButton({super.key, required this.text, required this.onPressed, this.image});
+  const CustomButton({
+    super.key,
+    required this.text,
+    required this.onPressed,
+    this.image,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -21,10 +26,14 @@ class CustomButton extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           ?image,
-          SizedBox(width:8),
+          SizedBox(width: 8),
           Text(
             text,
-            style: theme.textTheme.bodyLarge?.copyWith(color: AppColors.formcolor),
+            style: theme.textTheme.bodyLarge?.copyWith(
+              color: AppColors.formcolor,
+              fontWeight: FontWeight.w400,
+              fontSize: 20,
+            ),
           ),
         ],
       ),
