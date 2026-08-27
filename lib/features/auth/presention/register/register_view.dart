@@ -1,11 +1,15 @@
 import 'package:app/core/gen/assets.gen.dart';
+import 'package:app/core/routes/App_Routes_name.dart';
 import 'package:app/core/theme/AppColors.dart';
 import 'package:app/core/widgets/botton.dart';
 import 'package:app/core/widgets/textformfeild.dart';
-import 'package:app/feature/Register/presentation/ui/widgets/Language_Toggle_Switch.dart';
-import 'package:app/feature/Register/presentation/ui/widgets/carsuol.dart';
-import 'package:app/feature/Register/presentation/ui/widgets/register_forms.dart';
+import 'package:app/features/auth/presention/register/widgets/Language_Toggle_Switch.dart';
+import 'package:app/features/auth/presention/register/widgets/carsuol.dart';
+import 'package:app/features/auth/presention/register/widgets/register_forms.dart';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_bounceable/flutter_bounceable.dart';
+import 'package:go_router/go_router.dart';
 
 class RegisterView extends StatefulWidget {
   const RegisterView({super.key});
@@ -20,9 +24,16 @@ class _RegisterViewState extends State<RegisterView> {
     final theme = Theme.of(context);
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.transparent,
+        backgroundColor: Colors.black,
+
         elevation: 0,
-        leading: Assets.icons.arrowBack.svg(),
+        leading: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Bounceable(onTap: () { 
+          context.go(AppRoutesName.login);
+           },
+          child: Assets.icons.arrowBack.svg(width: 21)),
+        ),
         title: const Text(
           'Register',
           style: TextStyle(

@@ -1,8 +1,8 @@
 import 'dart:async';
 
 import 'package:app/core/gen/assets.gen.dart';
-import 'package:app/core/routes/App_Routes_name.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class Splash extends StatefulWidget {
   const Splash({super.key});
@@ -15,19 +15,20 @@ class _SplashState extends State<Splash> {
   @override
   void initState() {
     super.initState();
+
     Timer(const Duration(seconds: 3), () {
-      Navigator.pushNamedAndRemoveUntil(
-        context,
-        AppRoutesName.onboarding,
-        (route) => false,
-      );
+      if (!mounted) return;
+
+      context.go('/onboarding');
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Center(child: Assets.images.splashBackground.image()),
+    return Scaffold(
+      body: Center(
+        child: Assets.images.splashBackground.image(),
+      ),
     );
   }
 }

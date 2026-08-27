@@ -1,9 +1,11 @@
 import 'package:app/core/gen/assets.gen.dart';
+import 'package:app/core/routes/App_Routes_name.dart';
 import 'package:app/core/theme/AppColors.dart';
 import 'package:app/core/widgets/botton.dart';
 import 'package:app/core/widgets/textformfeild.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bounceable/flutter_bounceable.dart';
+import 'package:go_router/go_router.dart';
 
 class Login extends StatefulWidget {
   const Login({super.key});
@@ -53,12 +55,17 @@ class _LoginState extends State<Login> {
 
               const SizedBox(height: 17),
 
-              Align(
-                alignment: Alignment.bottomRight,
-                child: Text(
-                  "Forget Password?",
-                  style: theme.textTheme.bodyMedium?.copyWith(
-                    color: AppColors.yellow,
+              Bounceable(
+                onTap: () {
+                  context.go(AppRoutesName.forgetPassword);
+                },
+                child: Align(
+                  alignment: Alignment.bottomRight,
+                  child: Text(
+                    "Forget Password?",
+                    style: theme.textTheme.bodyMedium?.copyWith(
+                      color: AppColors.yellow,
+                    ),
                   ),
                 ),
               ),
@@ -79,7 +86,9 @@ class _LoginState extends State<Login> {
                     ),
                   ),
                   Bounceable(
-                    onTap: () {},
+                    onTap: () {
+                        context.go(AppRoutesName.register);
+                    },
                     child: Text(
                       " Create One",
                       style: theme.textTheme.bodyMedium?.copyWith(

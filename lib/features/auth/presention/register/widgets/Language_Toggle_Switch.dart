@@ -30,7 +30,7 @@ class _LanguageToggleSwitchState extends State<LanguageToggleSwitch> {
         height: 50,
         padding: const EdgeInsets.all(4),
         decoration: BoxDecoration(
-          color: AppColors.background,
+        
           borderRadius: BorderRadius.circular(30),
           border: Border.all(color: AppColors.bottoncolora, width: 3),
         ),

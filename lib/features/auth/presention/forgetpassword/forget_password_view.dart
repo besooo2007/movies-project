@@ -1,8 +1,11 @@
 import 'package:app/core/gen/assets.gen.dart';
+import 'package:app/core/routes/App_Routes_name.dart';
 import 'package:app/core/theme/AppColors.dart';
 import 'package:app/core/widgets/botton.dart';
 import 'package:app/core/widgets/textformfeild.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bounceable/flutter_bounceable.dart';
+import 'package:go_router/go_router.dart';
 
 class ForgetView extends StatelessWidget {
   const ForgetView({super.key});
@@ -13,7 +16,8 @@ class ForgetView extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
-        leading: Assets.icons.backArrowPng.image(),
+        leading: Bounceable(onTap: () {   context.go(AppRoutesName.login);},
+        child: Assets.icons.backArrowPng.image()),
         title: const Text(
           'Forget Password',
           style: TextStyle(
