@@ -26,6 +26,10 @@ class $AssetsIconsGen {
   /// File path: assets/icons/arrow_back.svg
   SvgGenImage get arrowBack => const SvgGenImage('assets/icons/arrow_back.svg');
 
+  /// File path: assets/icons/back_arrow_png.png
+  AssetGenImage get backArrowPng =>
+      const AssetGenImage('assets/icons/back_arrow_png.png');
+
   /// File path: assets/icons/email_icon.svg
   SvgGenImage get emailIcon => const SvgGenImage('assets/icons/email_icon.svg');
 
@@ -51,6 +55,7 @@ class $AssetsIconsGen {
     eg,
     us,
     arrowBack,
+    backArrowPng,
     emailIcon,
     hidden,
     iconGoogle,
