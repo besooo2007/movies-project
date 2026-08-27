@@ -1,4 +1,3 @@
-
 import 'package:app/core/theme/AppColors.dart';
 import 'package:flutter/material.dart';
 
@@ -19,11 +18,12 @@ class CustomTextForm extends StatelessWidget {
     return TextFormField(
       decoration: InputDecoration(
         hintText: hintText,
-        hintStyle: theme.textTheme.bodyLarge?.copyWith(color: AppColors.textcolor),
+        hintStyle: theme.textTheme.bodyLarge?.copyWith(
+          color: AppColors.textcolor,
+        ),
         prefixIcon: Padding(
           padding: const EdgeInsets.all(8.0),
           child: prefixIcon,
-
         ),
         suffixIcon: suffixIcon,
         filled: true,

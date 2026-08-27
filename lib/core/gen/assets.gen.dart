@@ -17,19 +17,47 @@ import 'package:vector_graphics/vector_graphics.dart' as _vg;
 class $AssetsIconsGen {
   const $AssetsIconsGen();
 
+  /// File path: assets/icons/EG.png
+  AssetGenImage get eg => const AssetGenImage('assets/icons/EG.png');
+
+  /// File path: assets/icons/US.png
+  AssetGenImage get us => const AssetGenImage('assets/icons/US.png');
+
+  /// File path: assets/icons/arrow_back.svg
+  SvgGenImage get arrowBack => const SvgGenImage('assets/icons/arrow_back.svg');
+
   /// File path: assets/icons/email_icon.svg
   SvgGenImage get emailIcon => const SvgGenImage('assets/icons/email_icon.svg');
+
+  /// File path: assets/icons/hidden.png
+  AssetGenImage get hidden => const AssetGenImage('assets/icons/hidden.png');
 
   /// File path: assets/icons/icon _google.svg
   SvgGenImage get iconGoogle =>
       const SvgGenImage('assets/icons/icon _google.svg');
 
+  /// File path: assets/icons/iden.png
+  AssetGenImage get iden => const AssetGenImage('assets/icons/iden.png');
+
   /// File path: assets/icons/password_icon.svg
   SvgGenImage get passwordIcon =>
       const SvgGenImage('assets/icons/password_icon.svg');
 
+  /// File path: assets/icons/phone.png
+  AssetGenImage get phone => const AssetGenImage('assets/icons/phone.png');
+
   /// List of all assets
-  List<SvgGenImage> get values => [emailIcon, iconGoogle, passwordIcon];
+  List<dynamic> get values => [
+    eg,
+    us,
+    arrowBack,
+    emailIcon,
+    hidden,
+    iconGoogle,
+    iden,
+    passwordIcon,
+    phone,
+  ];
 }
 
 class $AssetsImagesGen {
@@ -38,8 +66,24 @@ class $AssetsImagesGen {
   /// File path: assets/images/EG.png
   AssetGenImage get eg => const AssetGenImage('assets/images/EG.png');
 
+  /// File path: assets/images/Forgot password-img.png
+  AssetGenImage get forgotPasswordImg =>
+      const AssetGenImage('assets/images/Forgot password-img.png');
+
   /// File path: assets/images/LR.png
   AssetGenImage get lr => const AssetGenImage('assets/images/LR.png');
+
+  /// File path: assets/images/avatar_1.png
+  AssetGenImage get avatar1 =>
+      const AssetGenImage('assets/images/avatar_1.png');
+
+  /// File path: assets/images/avatar_2.png
+  AssetGenImage get avatar2 =>
+      const AssetGenImage('assets/images/avatar_2.png');
+
+  /// File path: assets/images/avatar_3.png
+  AssetGenImage get avatar3 =>
+      const AssetGenImage('assets/images/avatar_3.png');
 
   /// File path: assets/images/login_img.png
   AssetGenImage get loginImg =>
@@ -50,7 +94,16 @@ class $AssetsImagesGen {
       const AssetGenImage('assets/images/splash_background.png');
 
   /// List of all assets
-  List<AssetGenImage> get values => [eg, lr, loginImg, splashBackground];
+  List<AssetGenImage> get values => [
+    eg,
+    forgotPasswordImg,
+    lr,
+    avatar1,
+    avatar2,
+    avatar3,
+    loginImg,
+    splashBackground,
+  ];
 }
 
 abstract final class Assets {
