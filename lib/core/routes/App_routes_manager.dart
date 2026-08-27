@@ -1,4 +1,4 @@
-import 'package:app/core/model/login/login.dart';
+import 'package:app/features/auth/presention/login/login.dart';
 import 'package:app/core/model/onboarding/onboarding.dart';
 import 'package:app/core/model/splash/splash.dart';
 import 'package:flutter/material.dart';
