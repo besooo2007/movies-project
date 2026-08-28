@@ -106,11 +106,32 @@ class $AssetsImagesGen {
   AssetGenImage get onboarding3 =>
       const AssetGenImage('assets/images/onboarding3.png');
 
+  /// File path: assets/images/onboarding_4.png
+  AssetGenImage get onboarding4 =>
+      const AssetGenImage('assets/images/onboarding_4.png');
+
+  /// File path: assets/images/onboarding_5.png
+  AssetGenImage get onboarding5 =>
+      const AssetGenImage('assets/images/onboarding_5.png');
+
+  /// File path: assets/images/onboarding_6.png
+  AssetGenImage get onboarding6 =>
+      const AssetGenImage('assets/images/onboarding_6.png');
+
   /// File path: assets/images/shadow1.png
   AssetGenImage get shadow1 => const AssetGenImage('assets/images/shadow1.png');
 
   /// File path: assets/images/shadow2.png
   AssetGenImage get shadow2 => const AssetGenImage('assets/images/shadow2.png');
+
+  /// File path: assets/images/shadow4.png
+  AssetGenImage get shadow4 => const AssetGenImage('assets/images/shadow4.png');
+
+  /// File path: assets/images/shadow5.png
+  AssetGenImage get shadow5 => const AssetGenImage('assets/images/shadow5.png');
+
+  /// File path: assets/images/shadow6.png
+  AssetGenImage get shadow6 => const AssetGenImage('assets/images/shadow6.png');
 
   /// File path: assets/images/splash_background.png
   AssetGenImage get splashBackground =>
@@ -128,8 +149,14 @@ class $AssetsImagesGen {
     onBoarding1,
     onboarding2,
     onboarding3,
+    onboarding4,
+    onboarding5,
+    onboarding6,
     shadow1,
     shadow2,
+    shadow4,
+    shadow5,
+    shadow6,
     splashBackground,
   ];
 }

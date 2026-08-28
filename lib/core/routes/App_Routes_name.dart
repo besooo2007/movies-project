@@ -6,4 +6,8 @@ class AppRoutesName {
   static const String login = '/login';
   static const String register = '/register';
   static const String forgetPassword = '/forgetpassword';
+  static const String startWatching = '/start_watching';
+  static const String rateReview = '/rate_review';
+  static const String createWatchList = '/create_watch_list';
+
 }
