@@ -1,4 +1,6 @@
+import 'package:app/core/model/onboarding/ExploreAllGenres.dart';
 import 'package:app/core/model/onboarding/onboarding.dart';
+import 'package:app/core/model/onboarding/discovermovies.dart';
 import 'package:app/core/model/splash/splash.dart';
 import 'package:app/core/routes/app_routes_name.dart';
 import 'package:app/features/auth/presention/forgetpassword/forget_password_view.dart';
@@ -22,6 +24,15 @@ class AppRouter {
         path: AppRoutesName.onboarding,
         builder: (context, state) => const Onboarding(),
       ),
+    GoRoute(
+  path: AppRoutesName.discovermovies,
+  builder: (context, state) => const Discovermovies(),
+),
+
+GoRoute(
+  path: AppRoutesName.exploreAllGenres,
+  builder: (context, state) => const ExploreAllGenres(),
+),
 
       GoRoute(
         path: AppRoutesName.login,
@@ -39,10 +50,7 @@ class AppRouter {
       ),
     ],
 
-    errorBuilder: (context, state) => const Scaffold(
-      body: Center(
-        child: Text('Route Not Found'),
-      ),
-    ),
+    errorBuilder: (context, state) =>
+        const Scaffold(body: Center(child: Text('Route Not Found'))),
   );
 }

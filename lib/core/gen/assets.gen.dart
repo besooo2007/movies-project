@@ -94,6 +94,24 @@ class $AssetsImagesGen {
   AssetGenImage get loginImg =>
       const AssetGenImage('assets/images/login_img.png');
 
+  /// File path: assets/images/on_boarding1.png
+  AssetGenImage get onBoarding1 =>
+      const AssetGenImage('assets/images/on_boarding1.png');
+
+  /// File path: assets/images/onboarding2.png
+  AssetGenImage get onboarding2 =>
+      const AssetGenImage('assets/images/onboarding2.png');
+
+  /// File path: assets/images/onboarding3.png
+  AssetGenImage get onboarding3 =>
+      const AssetGenImage('assets/images/onboarding3.png');
+
+  /// File path: assets/images/shadow1.png
+  AssetGenImage get shadow1 => const AssetGenImage('assets/images/shadow1.png');
+
+  /// File path: assets/images/shadow2.png
+  AssetGenImage get shadow2 => const AssetGenImage('assets/images/shadow2.png');
+
   /// File path: assets/images/splash_background.png
   AssetGenImage get splashBackground =>
       const AssetGenImage('assets/images/splash_background.png');
@@ -107,6 +125,11 @@ class $AssetsImagesGen {
     avatar2,
     avatar3,
     loginImg,
+    onBoarding1,
+    onboarding2,
+    onboarding3,
+    shadow1,
+    shadow2,
     splashBackground,
   ];
 }
