@@ -5,7 +5,9 @@ import 'package:app/core/model/splash/splash.dart';
 import 'package:app/core/routes/app_routes_name.dart';
 import 'package:app/features/auth/presention/forgetpassword/forget_password_view.dart';
 import 'package:app/features/auth/presention/login/login.dart';
-
+import 'package:app/core/model/onboarding/creat_watch_list.dart';
+import 'package:app/core/model/onboarding/rate_review.dart';
+import 'package:app/core/model/onboarding/start_watching.dart';
 import 'package:app/features/auth/presention/register/register_view.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -33,7 +35,18 @@ GoRoute(
   path: AppRoutesName.exploreAllGenres,
   builder: (context, state) => const ExploreAllGenres(),
 ),
-
+      GoRoute(
+        path: AppRoutesName.createWatchList,
+        builder: (context, state) => const CreateWatchListsView(),
+      ),
+      GoRoute(
+        path: AppRoutesName.rateReview,
+        builder: (context, state) => const RateReview(),
+      ),
+      GoRoute(
+        path: AppRoutesName.startWatching,
+        builder: (context, state) => const StartWatching(),
+      ),
       GoRoute(
         path: AppRoutesName.login,
         builder: (context, state) => const Login(),
@@ -54,3 +67,4 @@ GoRoute(
         const Scaffold(body: Center(child: Text('Route Not Found'))),
   );
 }
+

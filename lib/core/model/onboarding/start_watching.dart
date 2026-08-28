@@ -6,8 +6,8 @@ import 'package:app/core/widgets/outlinebotton.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-class ExploreAllGenres extends StatelessWidget {
-  const ExploreAllGenres({super.key});
+class StartWatching extends StatelessWidget {
+  const StartWatching({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -18,11 +18,11 @@ class ExploreAllGenres extends StatelessWidget {
       body: Stack(
         children: [
           Positioned.fill(
-            child: Assets.images.onboarding3.image(fit: BoxFit.cover),
+            child: Assets.images.onboarding6.image(fit: BoxFit.cover),
           ),
 
           Positioned.fill(
-            child: Assets.images.shadow2.image(fit: BoxFit.cover),
+            child: Assets.images.shadow6.image(fit: BoxFit.cover),
           ),
 
           Positioned(
@@ -42,33 +42,23 @@ class ExploreAllGenres extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Text(
-                    'Explore All Genres',
+                    'Start Watching Now',
                     textAlign: TextAlign.center,
                     style: theme.textTheme.titleLarge?.copyWith(
                       color: Colors.white,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-
                   const SizedBox(height: 12),
-
-                  Text(
-                    'Discover movies from every genre, in all available qualities. Find something new and exciting to watch every day.',
-                    textAlign: TextAlign.center,
-                    style: theme.textTheme.bodyMedium?.copyWith(
-                      color: Colors.white,
-                      
-                    ),
-                  ),
-
                   const SizedBox(height: 20),
 
                   CustomButton(text: 'Next', onPressed: () {
-                    context.go(AppRoutesName.createWatchList);
-                  }),
+                    context.go(AppRoutesName.login);
+                  }
+                  ),
                   const SizedBox(height: 16),
                   OutlineButton(text: 'Back', onPressed: () {
-                    context.pop(AppRoutesName.discovermovies);
+                    context.go(AppRoutesName.rateReview);
                   }),
                 ],
               ),
