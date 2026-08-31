@@ -50,6 +50,9 @@ class $AssetsIconsGen {
   /// File path: assets/icons/phone.png
   AssetGenImage get phone => const AssetGenImage('assets/icons/phone.png');
 
+  /// File path: assets/icons/user.svg
+  SvgGenImage get user => const SvgGenImage('assets/icons/user.svg');
+
   /// List of all assets
   List<dynamic> get values => [
     eg,
@@ -62,6 +65,7 @@ class $AssetsIconsGen {
     iden,
     passwordIcon,
     phone,
+    user,
   ];
 }
 
@@ -89,6 +93,30 @@ class $AssetsImagesGen {
   /// File path: assets/images/avatar_3.png
   AssetGenImage get avatar3 =>
       const AssetGenImage('assets/images/avatar_3.png');
+
+  /// File path: assets/images/avatar_4.png
+  AssetGenImage get avatar4 =>
+      const AssetGenImage('assets/images/avatar_4.png');
+
+  /// File path: assets/images/avatar_5.png
+  AssetGenImage get avatar5 =>
+      const AssetGenImage('assets/images/avatar_5.png');
+
+  /// File path: assets/images/avatar_6.png
+  AssetGenImage get avatar6 =>
+      const AssetGenImage('assets/images/avatar_6.png');
+
+  /// File path: assets/images/avatar_7.png
+  AssetGenImage get avatar7 =>
+      const AssetGenImage('assets/images/avatar_7.png');
+
+  /// File path: assets/images/avatar_8.png
+  AssetGenImage get avatar8 =>
+      const AssetGenImage('assets/images/avatar_8.png');
+
+  /// File path: assets/images/avatar_9.png
+  AssetGenImage get avatar9 =>
+      const AssetGenImage('assets/images/avatar_9.png');
 
   /// File path: assets/images/login_img.png
   AssetGenImage get loginImg =>
@@ -145,6 +173,12 @@ class $AssetsImagesGen {
     avatar1,
     avatar2,
     avatar3,
+    avatar4,
+    avatar5,
+    avatar6,
+    avatar7,
+    avatar8,
+    avatar9,
     loginImg,
     onBoarding1,
     onboarding2,
