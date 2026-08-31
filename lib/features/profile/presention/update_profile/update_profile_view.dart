@@ -1,4 +1,5 @@
 import 'package:app/core/gen/fonts.gen.dart';
+import 'package:app/core/routes/App_Routes_name.dart';
 import 'package:app/core/theme/AppColors.dart';
 import 'package:app/core/widgets/botton.dart';
 import 'package:app/core/widgets/textformfeild.dart';
@@ -108,7 +109,9 @@ class _UpdateProfileViewState extends State<UpdateProfileView> {
                         Align(
                           alignment: Alignment.centerLeft,
                           child: TextButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              context.go(AppRoutesName.forgetPassword);
+                            },
                             child: Text(
                               "Reset Password",
                               style: Theme.of(context).textTheme.bodyLarge
