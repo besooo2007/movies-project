@@ -1,9 +1,24 @@
 
 import 'package:app/core/routes/App_routes_.dart';
+import 'package:app/features/auth/di/injection.dart';
+
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
-void main() {
-  runApp(const MyApp());
+import 'firebase_options.dart';
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+
+  setupAuthInjection();
+
+  runApp(
+    const MyApp(),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -13,11 +28,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp.router(
       debugShowCheckedModeBanner: false,
-
       theme: ThemeData(
         scaffoldBackgroundColor: Colors.black,
       ),
-
       routerConfig: AppRouter.router,
     );
   }
