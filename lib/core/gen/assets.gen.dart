@@ -20,6 +20,9 @@ class $AssetsIconsGen {
   /// File path: assets/icons/EG.png
   AssetGenImage get eg => const AssetGenImage('assets/icons/EG.png');
 
+  /// File path: assets/icons/Profiel.png
+  AssetGenImage get profiel => const AssetGenImage('assets/icons/Profiel.png');
+
   /// File path: assets/icons/US.png
   AssetGenImage get us => const AssetGenImage('assets/icons/US.png');
 
@@ -32,6 +35,9 @@ class $AssetsIconsGen {
 
   /// File path: assets/icons/email_icon.svg
   SvgGenImage get emailIcon => const SvgGenImage('assets/icons/email_icon.svg');
+
+  /// File path: assets/icons/explore.png
+  AssetGenImage get explore => const AssetGenImage('assets/icons/explore.png');
 
   /// File path: assets/icons/hidden.png
   AssetGenImage get hidden => const AssetGenImage('assets/icons/hidden.png');
@@ -50,18 +56,24 @@ class $AssetsIconsGen {
   /// File path: assets/icons/phone.png
   AssetGenImage get phone => const AssetGenImage('assets/icons/phone.png');
 
+  /// File path: assets/icons/star.png
+  AssetGenImage get star => const AssetGenImage('assets/icons/star.png');
+
   /// List of all assets
   List<dynamic> get values => [
     eg,
+    profiel,
     us,
     arrowBack,
     backArrowPng,
     emailIcon,
+    explore,
     hidden,
     iconGoogle,
     iden,
     passwordIcon,
     phone,
+    star,
   ];
 }
 
@@ -77,6 +89,26 @@ class $AssetsImagesGen {
 
   /// File path: assets/images/LR.png
   AssetGenImage get lr => const AssetGenImage('assets/images/LR.png');
+
+  /// File path: assets/images/Vector (2).png
+  AssetGenImage get vector2 =>
+      const AssetGenImage('assets/images/Vector (2).png');
+
+  /// File path: assets/images/Vector (3).png
+  AssetGenImage get vector3 =>
+      const AssetGenImage('assets/images/Vector (3).png');
+
+  /// File path: assets/images/Vector (4).png
+  AssetGenImage get vector4 =>
+      const AssetGenImage('assets/images/Vector (4).png');
+
+  /// File path: assets/images/Vector (5).png
+  AssetGenImage get vector5 =>
+      const AssetGenImage('assets/images/Vector (5).png');
+
+  /// File path: assets/images/available now.png
+  AssetGenImage get availableNow =>
+      const AssetGenImage('assets/images/available now.png');
 
   /// File path: assets/images/avatar_1.png
   AssetGenImage get avatar1 =>
@@ -94,20 +126,55 @@ class $AssetsImagesGen {
   AssetGenImage get loginImg =>
       const AssetGenImage('assets/images/login_img.png');
 
+  /// File path: assets/images/poster_1.jpg
+  AssetGenImage get poster1 =>
+      const AssetGenImage('assets/images/poster_1.jpg');
+
+  /// File path: assets/images/poster_2.jpg
+  AssetGenImage get poster2 =>
+      const AssetGenImage('assets/images/poster_2.jpg');
+
+  /// File path: assets/images/poster_3.jpg
+  AssetGenImage get poster3 =>
+      const AssetGenImage('assets/images/poster_3.jpg');
+
+  /// File path: assets/images/poster_4.jpg
+  AssetGenImage get poster4 =>
+      const AssetGenImage('assets/images/poster_4.jpg');
+
+  /// File path: assets/images/poster_5.jpg
+  AssetGenImage get poster5 =>
+      const AssetGenImage('assets/images/poster_5.jpg');
+
   /// File path: assets/images/splash_background.png
   AssetGenImage get splashBackground =>
       const AssetGenImage('assets/images/splash_background.png');
+
+  /// File path: assets/images/watch now.png
+  AssetGenImage get watchNow =>
+      const AssetGenImage('assets/images/watch now.png');
 
   /// List of all assets
   List<AssetGenImage> get values => [
     eg,
     forgotPasswordImg,
     lr,
+    vector2,
+    vector3,
+    vector4,
+    vector5,
+    availableNow,
     avatar1,
     avatar2,
     avatar3,
     loginImg,
+    poster1,
+    poster2,
+    poster3,
+    poster4,
+    poster5,
     splashBackground,
+    watchNow,
   ];
 }
 
