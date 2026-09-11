@@ -1,7 +1,7 @@
-
 import 'package:app/core/routes/App_routes_.dart';
 import 'package:app/features/auth/di/injection.dart';
 
+import 'package:app/features/home_api/di/injiction.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
@@ -15,6 +15,7 @@ void main() async {
   );
 
   setupAuthInjection();
+  setupHomeInjection();
 
   runApp(
     const MyApp(),

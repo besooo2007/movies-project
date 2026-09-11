@@ -1,6 +1,6 @@
 
 
-import 'package:app/features/auth/data/user_entity.dart';
+import 'package:app/features/auth/domin/entities/user_entity.dart';
 import 'package:app/features/auth/domin/repositories/auth_repo.dart';
 
 class SignUp {
