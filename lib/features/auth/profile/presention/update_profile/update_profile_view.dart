@@ -46,7 +46,7 @@ class _UpdateProfileViewState extends State<UpdateProfileView> {
     super.dispose();
   }
 
-  void updateProfile() {
+  void updateProfile(BuildContext context) {
     if (userNameController.text.trim().isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
@@ -56,26 +56,59 @@ class _UpdateProfileViewState extends State<UpdateProfileView> {
       return;
     }
 
+    if (phoneController.text.trim().isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text("Please enter your phone number"),
+        ),
+      );
+      return;
+    }
+
     context.read<AuthBloc>().add(
-          UpdateProfileRequested(
-            name: userNameController.text.trim(),
-          ),
-        );
+      UpdateProfileRequested(
+        name: userNameController.text.trim(),
+        phone: phoneController.text.trim(),
+        photoUrl: avatars[selectedAvatarIndex].path,
+      ),
+    );
   }
 
-  void deleteAccount() {
+  void deleteAccount(BuildContext context) {
     context.read<AuthBloc>().add(
-          DeleteAccountRequested(),
-        );
+      DeleteAccountRequested(),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_) => getIt<AuthBloc>(),
+      create: (_) => getIt<AuthBloc>()
+        ..add(
+          GetCurrentUserRequested(),
+        ),
       child: BlocListener<AuthBloc, AuthState>(
         listener: (context, state) {
           if (state is AuthSuccess) {
+            if (state.message == null && state.user != null) {
+              final user = state.user!;
+
+              userNameController.text = user.name;
+              phoneController.text = user.phone;
+
+              final index = avatars.indexWhere(
+                (avatar) => avatar.path == user.photoUrl,
+              );
+
+              if (index != -1) {
+                setState(() {
+                  selectedAvatarIndex = index;
+                });
+              }
+
+              return;
+            }
+
             if (state.message == 'Account deleted successfully') {
               ScaffoldMessenger.of(context).showSnackBar(
                 const SnackBar(
@@ -87,11 +120,13 @@ class _UpdateProfileViewState extends State<UpdateProfileView> {
               return;
             }
 
-            ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(
-                content: Text("Profile updated successfully"),
-              ),
-            );
+            if (state.message == 'Profile updated successfully') {
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(
+                  content: Text("Profile updated successfully"),
+                ),
+              );
+            }
           }
 
           if (state is AuthFailure) {
@@ -149,8 +184,7 @@ class _UpdateProfileViewState extends State<UpdateProfileView> {
                                   backgroundColor: Colors.transparent,
                                   builder: (context) =>
                                       AvatarBottomSheet(
-                                    selectedIndex:
-                                        selectedAvatarIndex,
+                                    selectedIndex: selectedAvatarIndex,
                                   ),
                                 );
 
@@ -164,8 +198,7 @@ class _UpdateProfileViewState extends State<UpdateProfileView> {
                                 radius: 60,
                                 backgroundColor: Colors.transparent,
                                 backgroundImage:
-                                    avatars[selectedAvatarIndex]
-                                        .provider(),
+                                    avatars[selectedAvatarIndex].provider(),
                               ),
                             ),
                             const SizedBox(height: 32),
@@ -221,7 +254,7 @@ class _UpdateProfileViewState extends State<UpdateProfileView> {
                               : "Delete Account",
                           onPressed: () {
                             if (!isLoading) {
-                              deleteAccount();
+                              deleteAccount(context);
                             }
                           },
                           color: AppColors.red,
@@ -239,7 +272,7 @@ class _UpdateProfileViewState extends State<UpdateProfileView> {
                               : "Update Data",
                           onPressed: () {
                             if (!isLoading) {
-                              updateProfile();
+                              updateProfile(context);
                             }
                           },
                           color: AppColors.bottoncolora,

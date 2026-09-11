@@ -29,7 +29,15 @@ class _RegisterViewState extends State<RegisterView> {
       child: BlocConsumer<AuthBloc, AuthState>(
         listener: (context, state) {
           if (state is AuthSuccess) {
-            context.go(AppRoutesName.discovermovies);
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text(
+                  state.message ?? 'Account created successfully',
+                ),
+              ),
+            );
+
+            context.go(AppRoutesName.login);
           }
 
           if (state is AuthFailure) {

@@ -7,12 +7,14 @@ class CustomTextForm extends StatelessWidget {
   final Widget? suffixIcon;
   final TextEditingController? controller;
   final bool obscureText;
+  final String? Function(String?)? validator;
 
   const CustomTextForm({
     super.key,
     this.suffixIcon,
     this.controller,
     this.obscureText = false,
+    this.validator,
     required this.hintText,
     required this.prefixIcon,
   });
@@ -24,36 +26,28 @@ class CustomTextForm extends StatelessWidget {
     return TextFormField(
       controller: controller,
       obscureText: obscureText,
-
+      validator: validator,
       style: const TextStyle(
         color: Colors.white,
       ),
-
       decoration: InputDecoration(
         hintText: hintText,
-
         hintStyle: theme.textTheme.bodyLarge?.copyWith(
           color: AppColors.textcolor,
         ),
-
         prefixIcon: Padding(
           padding: const EdgeInsets.all(8.0),
           child: prefixIcon,
         ),
-
         suffixIcon: suffixIcon,
-
         filled: true,
-
         fillColor: AppColors.formcolor,
-
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(15),
           borderSide: BorderSide(
             color: AppColors.formcolor,
           ),
         ),
-
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(15),
           borderSide: BorderSide(
@@ -61,7 +55,6 @@ class CustomTextForm extends StatelessWidget {
           ),
         ),
       ),
-
       cursorColor: AppColors.textcolor,
     );
   }

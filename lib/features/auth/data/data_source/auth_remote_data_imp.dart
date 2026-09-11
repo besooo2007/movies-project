@@ -1,11 +1,16 @@
 import 'package:app/features/auth/data/data_source/auth_remote_data_source.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
   final FirebaseAuth firebaseAuth;
+  final FirebaseFirestore firestore;
 
-  AuthRemoteDataSourceImpl(this.firebaseAuth);
+  AuthRemoteDataSourceImpl(
+    this.firebaseAuth,
+    this.firestore,
+  );
 
   @override
   Future<UserCredential> signIn({
@@ -24,12 +29,21 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
     required String email,
     required String password,
   }) async {
-    final credential = await firebaseAuth.createUserWithEmailAndPassword(
+    final credential =
+        await firebaseAuth.createUserWithEmailAndPassword(
       email: email,
       password: password,
     );
 
     await credential.user?.updateDisplayName(name);
+
+    await firestore.collection('users').doc(credential.user!.uid).set({
+      'id': credential.user!.uid,
+      'email': email,
+      'name': name,
+      'phone': '',
+      'photoUrl': '',
+    });
 
     return credential;
   }
@@ -48,7 +62,25 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
       idToken: googleAuth.idToken,
     );
 
-    return await firebaseAuth.signInWithCredential(credential);
+    final userCredential =
+        await firebaseAuth.signInWithCredential(credential);
+
+    final user = userCredential.user!;
+
+    final userDoc =
+        await firestore.collection('users').doc(user.uid).get();
+
+    if (!userDoc.exists) {
+      await firestore.collection('users').doc(user.uid).set({
+        'id': user.uid,
+        'email': user.email ?? '',
+        'name': user.displayName ?? '',
+        'phone': user.phoneNumber ?? '',
+        'photoUrl': user.photoURL ?? '',
+      });
+    }
+
+    return userCredential;
   }
 
   @override
@@ -63,22 +95,62 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
   @override
   Future<void> updateProfile({
     required String name,
+    required String phone,
     String? photoUrl,
   }) async {
     final user = firebaseAuth.currentUser;
 
-    await user?.updateDisplayName(name);
-
-    if (photoUrl != null) {
-      await user?.updatePhotoURL(photoUrl);
+    if (user == null) {
+      return;
     }
 
-    await user?.reload();
+    await user.updateDisplayName(name);
+
+    await firestore.collection('users').doc(user.uid).set(
+      {
+        'id': user.uid,
+        'email': user.email ?? '',
+        'name': name,
+        'phone': phone,
+        'photoUrl': photoUrl ?? '',
+      },
+      SetOptions(merge: true),
+    );
+
+    await user.reload();
+  }
+
+  @override
+  Future<Map<String, dynamic>?> getUserProfile() async {
+    final user = firebaseAuth.currentUser;
+
+    if (user == null) {
+      return null;
+    }
+
+    final doc = await firestore
+        .collection('users')
+        .doc(user.uid)
+        .get();
+
+    if (!doc.exists) {
+      return null;
+    }
+
+    return doc.data();
   }
 
   @override
   Future<void> deleteAccount() async {
-    await firebaseAuth.currentUser?.delete();
+    final user = firebaseAuth.currentUser;
+
+    if (user == null) {
+      return;
+    }
+
+    await firestore.collection('users').doc(user.uid).delete();
+
+    await user.delete();
   }
 
   @override

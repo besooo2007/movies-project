@@ -20,6 +20,8 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
+  final formKey = GlobalKey<FormState>();
+
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
 
@@ -34,18 +36,22 @@ class _LoginState extends State<Login> {
   }
 
   void login(BuildContext context) {
+    if (!formKey.currentState!.validate()) {
+      return;
+    }
+
     context.read<AuthBloc>().add(
-          SignInRequested(
-            email: emailController.text.trim(),
-            password: passwordController.text,
-          ),
-        );
+      SignInRequested(
+        email: emailController.text.trim(),
+        password: passwordController.text,
+      ),
+    );
   }
 
   void loginWithGoogle(BuildContext context) {
     context.read<AuthBloc>().add(
-          SignInWithGoogleRequested(),
-        );
+      SignInWithGoogleRequested(),
+    );
   }
 
   @override
@@ -57,7 +63,15 @@ class _LoginState extends State<Login> {
       child: BlocConsumer<AuthBloc, AuthState>(
         listener: (context, state) {
           if (state is AuthSuccess) {
-            context.go(AppRoutesName.discovermovies);
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text(
+                  state.message ?? 'Login successful',
+                ),
+              ),
+            );
+
+            context.go(AppRoutesName.home);
           }
 
           if (state is AuthFailure) {
@@ -75,221 +89,250 @@ class _LoginState extends State<Login> {
             body: SingleChildScrollView(
               child: Padding(
                 padding: const EdgeInsets.all(19.0),
-                child: Column(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.symmetric(
-                        vertical: 67,
-                      ),
-                      child: Center(
-                        child: Assets.images.loginImg.image(
-                          width: 120,
-                          height: 118,
+                child: Form(
+                  key: formKey,
+                  child: Column(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.symmetric(
+                          vertical: 67,
+                        ),
+                        child: Center(
+                          child: Assets.images.loginImg.image(
+                            width: 120,
+                            height: 118,
+                          ),
                         ),
                       ),
-                    ),
 
-                    CustomTextForm(
-                      hintText: "Email",
-                      controller: emailController,
-                      prefixIcon: Assets.icons.emailIcon.svg(
-                        width: 31,
-                        height: 25,
-                      ),
-                    ),
+                      CustomTextForm(
+                        hintText: "Email",
+                        controller: emailController,
+                        prefixIcon: Assets.icons.emailIcon.svg(
+                          width: 31,
+                          height: 25,
+                        ),
+                        validator: (value) {
+                          if (value == null ||
+                              value.trim().isEmpty) {
+                            return "Please enter your email";
+                          }
 
-                    const SizedBox(height: 22),
+                          if (!RegExp(
+                            r'^[\w\.-]+@([\w-]+\.)+[\w-]{2,4}$',
+                          ).hasMatch(value.trim())) {
+                            return "Please enter a valid email";
+                          }
 
-                    CustomTextForm(
-                      hintText: "Password",
-                      controller: passwordController,
-                      obscureText: !isPasswordVisible,
-                      prefixIcon: Assets.icons.passwordIcon.svg(
-                        width: 31,
-                        height: 25,
-                      ),
-                      suffixIcon: GestureDetector(
-                        onTap: () {
-                          setState(() {
-                            isPasswordVisible = !isPasswordVisible;
-                          });
+                          return null;
                         },
-                        child: Icon(
-                          isPasswordVisible
-                              ? Icons.visibility
-                              : Icons.visibility_off_sharp,
-                          color: AppColors.textcolor,
-                        ),
                       ),
-                    ),
 
-                    const SizedBox(height: 17),
+                      const SizedBox(height: 22),
 
-                    Bounceable(
-                      onTap: () {
-                        context.go(
-                          AppRoutesName.forgetPassword,
-                        );
-                      },
-                      child: Align(
-                        alignment: Alignment.bottomRight,
-                        child: Text(
-                          "Forget Password?",
-                          style: theme.textTheme.bodyMedium?.copyWith(
-                            color: AppColors.yellow,
-                          ),
+                      CustomTextForm(
+                        hintText: "Password",
+                        controller: passwordController,
+                        obscureText: !isPasswordVisible,
+                        prefixIcon: Assets.icons.passwordIcon.svg(
+                          width: 31,
+                          height: 25,
                         ),
-                      ),
-                    ),
-
-                    const SizedBox(height: 33),
-
-                    CustomButton(
-                      text: isLoading ? "Loading..." : "Login",
-                      onPressed: () {
-                        if (!isLoading) {
-                          login(context);
-                        }
-                      },
-                    ),
-
-                    const SizedBox(height: 22),
-
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          "Don't have an account?",
-                          style: theme.textTheme.bodyMedium?.copyWith(
-                            color: AppColors.textColor,
-                          ),
-                        ),
-                        Bounceable(
+                        suffixIcon: GestureDetector(
                           onTap: () {
-                            context.go(
-                              AppRoutesName.register,
-                            );
+                            setState(() {
+                              isPasswordVisible =
+                                  !isPasswordVisible;
+                            });
                           },
+                          child: Icon(
+                            isPasswordVisible
+                                ? Icons.visibility
+                                : Icons.visibility_off_sharp,
+                            color: AppColors.textcolor,
+                          ),
+                        ),
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return "Please enter your password";
+                          }
+
+                          if (value.length < 6) {
+                            return "Password must be at least 6 characters";
+                          }
+
+                          return null;
+                        },
+                      ),
+
+                      const SizedBox(height: 17),
+
+                      Bounceable(
+                        onTap: () {
+                          context.go(
+                            AppRoutesName.forgetPassword,
+                          );
+                        },
+                        child: Align(
+                          alignment: Alignment.bottomRight,
                           child: Text(
-                            " Create One",
+                            "Forget Password?",
                             style: theme.textTheme.bodyMedium?.copyWith(
-                              color: AppColors.bottoncolora,
+                              color: AppColors.yellow,
                             ),
                           ),
                         ),
-                      ],
-                    ),
-
-                    const SizedBox(height: 27),
-
-                    Padding(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 50,
                       ),
-                      child: Row(
+
+                      const SizedBox(height: 33),
+
+                      CustomButton(
+                        text: isLoading ? "Loading..." : "Login",
+                        onPressed: () {
+                          if (!isLoading) {
+                            login(context);
+                          }
+                        },
+                      ),
+
+                      const SizedBox(height: 22),
+
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Expanded(
-                            child: Divider(
-                              thickness: 1,
-                              color: AppColors.bottoncolora,
+                          Text(
+                            "Don't have an account?",
+                            style: theme.textTheme.bodyMedium?.copyWith(
+                              color: AppColors.textColor,
                             ),
                           ),
-                          Padding(
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 10,
-                            ),
+                          Bounceable(
+                            onTap: () {
+                              context.go(
+                                AppRoutesName.register,
+                              );
+                            },
                             child: Text(
-                              "Or",
+                              " Create One",
                               style: theme.textTheme.bodyMedium?.copyWith(
                                 color: AppColors.bottoncolora,
                               ),
                             ),
                           ),
-                          Expanded(
-                            child: Divider(
-                              thickness: 1,
-                              color: AppColors.bottoncolora,
-                            ),
-                          ),
                         ],
                       ),
-                    ),
 
-                    const SizedBox(height: 28),
+                      const SizedBox(height: 27),
 
-                    CustomButton(
-                      text: isLoading
-                          ? "Loading..."
-                          : "Login With Google",
-                      image: Assets.icons.iconGoogle.svg(
-                        width: 20,
-                        height: 20,
-                      ),
-                      onPressed: () {
-                        if (!isLoading) {
-                          loginWithGoogle(context);
-                        }
-                      },
-                    ),
-
-                    const SizedBox(height: 25),
-
-                    GestureDetector(
-                      onTap: () {
-                        setState(() {
-                          isOn = !isOn;
-                        });
-                      },
-                      child: Container(
-                        width: 90,
-                        height: 45,
-                        padding: const EdgeInsets.all(4),
-                        decoration: BoxDecoration(
-                          border: Border.all(
-                            color: AppColors.bottoncolora,
-                            width: 1.5,
-                          ),
-                          borderRadius: BorderRadius.circular(25),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 50,
                         ),
                         child: Row(
                           children: [
                             Expanded(
-                              child: Container(
-                                decoration: BoxDecoration(
-                                  color: !isOn
-                                      ? AppColors.bottoncolora
-                                      : Colors.transparent,
-                                  shape: BoxShape.circle,
-                                ),
-                                child: Center(
-                                  child: Assets.images.lr.image(
-                                    width: 25,
-                                    height: 25,
-                                  ),
+                              child: Divider(
+                                thickness: 1,
+                                color: AppColors.bottoncolora,
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 10,
+                              ),
+                              child: Text(
+                                "Or",
+                                style: theme.textTheme.bodyMedium?.copyWith(
+                                  color: AppColors.bottoncolora,
                                 ),
                               ),
                             ),
                             Expanded(
-                              child: Container(
-                                decoration: BoxDecoration(
-                                  color: isOn
-                                      ? AppColors.bottoncolora
-                                      : Colors.transparent,
-                                  shape: BoxShape.circle,
-                                ),
-                                child: Center(
-                                  child: Assets.images.eg.image(
-                                    width: 25,
-                                    height: 25,
-                                  ),
-                                ),
+                              child: Divider(
+                                thickness: 1,
+                                color: AppColors.bottoncolora,
                               ),
                             ),
                           ],
                         ),
                       ),
-                    ),
-                  ],
+
+                      const SizedBox(height: 28),
+
+                      CustomButton(
+                        text: isLoading
+                            ? "Loading..."
+                            : "Login With Google",
+                        image: Assets.icons.iconGoogle.svg(
+                          width: 20,
+                          height: 20,
+                        ),
+                        onPressed: () {
+                          if (!isLoading) {
+                            loginWithGoogle(context);
+                          }
+                        },
+                      ),
+
+                      const SizedBox(height: 25),
+
+                      GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            isOn = !isOn;
+                          });
+                        },
+                        child: Container(
+                          width: 90,
+                          height: 45,
+                          padding: const EdgeInsets.all(4),
+                          decoration: BoxDecoration(
+                            border: Border.all(
+                              color: AppColors.bottoncolora,
+                              width: 1.5,
+                            ),
+                            borderRadius: BorderRadius.circular(25),
+                          ),
+                          child: Row(
+                            children: [
+                              Expanded(
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    color: !isOn
+                                        ? AppColors.bottoncolora
+                                        : Colors.transparent,
+                                    shape: BoxShape.circle,
+                                  ),
+                                  child: Center(
+                                    child: Assets.images.lr.image(
+                                      width: 25,
+                                      height: 25,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              Expanded(
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    color: isOn
+                                        ? AppColors.bottoncolora
+                                        : Colors.transparent,
+                                    shape: BoxShape.circle,
+                                  ),
+                                  child: Center(
+                                    child: Assets.images.eg.image(
+                                      width: 25,
+                                      height: 25,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),

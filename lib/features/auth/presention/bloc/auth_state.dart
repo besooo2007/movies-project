@@ -1,6 +1,5 @@
 import 'package:app/features/auth/domin/entities/user_entity.dart';
 
-
 abstract class AuthState {}
 
 class AuthInitial extends AuthState {}

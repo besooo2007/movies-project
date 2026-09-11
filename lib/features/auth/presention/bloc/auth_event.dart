@@ -32,14 +32,18 @@ class ResetPasswordRequested extends AuthEvent {
 
 class UpdateProfileRequested extends AuthEvent {
   final String name;
+  final String phone;
   final String? photoUrl;
 
   UpdateProfileRequested({
     required this.name,
+    required this.phone,
     this.photoUrl,
   });
 }
 
 class DeleteAccountRequested extends AuthEvent {}
+
 class SignInWithGoogleRequested extends AuthEvent {}
+
 class GetCurrentUserRequested extends AuthEvent {}

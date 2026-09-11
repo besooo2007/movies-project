@@ -21,8 +21,11 @@ abstract class AuthRemoteDataSource {
 
   Future<void> updateProfile({
     required String name,
+    required String phone,
     String? photoUrl,
   });
+
+  Future<Map<String, dynamic>?> getUserProfile();
 
   Future<void> deleteAccount();
 

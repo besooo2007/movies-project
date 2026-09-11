@@ -10,19 +10,18 @@ import 'package:app/core/model/onboarding/rate_review.dart';
 import 'package:app/core/model/onboarding/start_watching.dart';
 import 'package:app/features/auth/presention/register/register_view.dart';
 import 'package:app/features/auth/profile/presention/update_profile/update_profile_view.dart';
+import 'package:app/features/home_api/presnation/bloc/ui/layout.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 class AppRouter {
   static final GoRouter router = GoRouter(
     initialLocation: AppRoutesName.splash,
-
     routes: [
       GoRoute(
         path: AppRoutesName.splash,
         builder: (context, state) => const Splash(),
       ),
-
       GoRoute(
         path: AppRoutesName.onboarding,
         builder: (context, state) => const Onboarding(),
@@ -31,7 +30,6 @@ class AppRouter {
         path: AppRoutesName.discovermovies,
         builder: (context, state) => const Discovermovies(),
       ),
-
       GoRoute(
         path: AppRoutesName.exploreAllGenres,
         builder: (context, state) => const ExploreAllGenres(),
@@ -52,12 +50,10 @@ class AppRouter {
         path: AppRoutesName.login,
         builder: (context, state) => const Login(),
       ),
-
       GoRoute(
         path: AppRoutesName.register,
         builder: (context, state) => const RegisterView(),
       ),
-
       GoRoute(
         path: AppRoutesName.forgetPassword,
         builder: (context, state) => const ForgetView(),
@@ -66,9 +62,15 @@ class AppRouter {
         path: AppRoutesName.updateProfile,
         builder: (context, state) => const UpdateProfileView(),
       ),
+      GoRoute(
+        path: AppRoutesName.home,
+        builder: (context, state) => const MainLayout(),
+      ),
     ],
-
-    errorBuilder: (context, state) =>
-        const Scaffold(body: Center(child: Text('Route Not Found'))),
+    errorBuilder: (context, state) => const Scaffold(
+      body: Center(
+        child: Text('Route Not Found'),
+      ),
+    ),
   );
 }

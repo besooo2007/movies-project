@@ -5,6 +5,8 @@ class AppRoutesName {
   static const String exploreAllGenres = '/ExploreAllGenres';
   static const String login = '/login';
   static const String register = '/register';
+  static const String home = '/home';
+  static const String layout = '/layout';
   static const String forgetPassword = '/forgetpassword';
   static const String startWatching = '/start_watching';
   static const String rateReview = '/rate_review';

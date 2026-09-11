@@ -20,11 +20,14 @@ class AuthRepositoryImpl implements AuthRepository {
 
     final user = credential.user!;
 
+    final profile = await remoteDataSource.getUserProfile();
+
     return UserModel.fromFirebase(
       id: user.uid,
       email: user.email ?? '',
-      name: user.displayName ?? '',
-      photoUrl: user.photoURL,
+      name: profile?['name'] ?? user.displayName ?? '',
+      phone: profile?['phone'] ?? '',
+      photoUrl: profile?['photoUrl'],
     );
   }
 
@@ -45,8 +48,9 @@ class AuthRepositoryImpl implements AuthRepository {
     return UserModel.fromFirebase(
       id: user.uid,
       email: user.email ?? '',
-      name: user.displayName ?? name,
-      photoUrl: user.photoURL,
+      name: name,
+      phone: '',
+      photoUrl: '',
     );
   }
 
@@ -62,10 +66,12 @@ class AuthRepositoryImpl implements AuthRepository {
   @override
   Future<UserEntity> updateProfile({
     required String name,
+    required String phone,
     String? photoUrl,
   }) async {
     await remoteDataSource.updateProfile(
       name: name,
+      phone: phone,
       photoUrl: photoUrl,
     );
 
@@ -74,8 +80,32 @@ class AuthRepositoryImpl implements AuthRepository {
     return UserModel.fromFirebase(
       id: user.uid,
       email: user.email ?? '',
-      name: user.displayName ?? name,
-      photoUrl: user.photoURL,
+      name: name,
+      phone: phone,
+      photoUrl: photoUrl,
+    );
+  }
+
+  @override
+  Future<UserEntity?> getUserProfile() async {
+    final user = remoteDataSource.getCurrentUser();
+
+    if (user == null) {
+      return null;
+    }
+
+    final profile = await remoteDataSource.getUserProfile();
+
+    if (profile == null) {
+      return null;
+    }
+
+    return UserModel.fromFirebase(
+      id: user.uid,
+      email: user.email ?? '',
+      name: profile['name'] ?? '',
+      phone: profile['phone'] ?? '',
+      photoUrl: profile['photoUrl'],
     );
   }
 
@@ -91,25 +121,30 @@ class AuthRepositoryImpl implements AuthRepository {
       id: user.uid,
       email: user.email ?? '',
       name: user.displayName ?? '',
+      phone: user.phoneNumber ?? '',
       photoUrl: user.photoURL,
     );
   }
+
   @override
-Future<void> deleteAccount() async {
-  await remoteDataSource.deleteAccount();
-}
+  Future<void> deleteAccount() async {
+    await remoteDataSource.deleteAccount();
+  }
 
- @override
-Future<UserEntity> signInWithGoogle() async {
-  final credential = await remoteDataSource.signInWithGoogle();
+  @override
+  Future<UserEntity> signInWithGoogle() async {
+    final credential = await remoteDataSource.signInWithGoogle();
 
-  final user = credential.user!;
+    final user = credential.user!;
 
-  return UserModel.fromFirebase(
-    id: user.uid,
-    email: user.email ?? '',
-    name: user.displayName ?? '',
-    photoUrl: user.photoURL,
-  );
-}
+    final profile = await remoteDataSource.getUserProfile();
+
+    return UserModel.fromFirebase(
+      id: user.uid,
+      email: user.email ?? '',
+      name: profile?['name'] ?? user.displayName ?? '',
+      phone: profile?['phone'] ?? '',
+      photoUrl: profile?['photoUrl'] ?? user.photoURL,
+    );
+  }
 }

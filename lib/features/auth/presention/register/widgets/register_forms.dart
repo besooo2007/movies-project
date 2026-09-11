@@ -1,12 +1,10 @@
 import 'package:app/core/gen/assets.gen.dart';
-import 'package:app/core/routes/App_Routes_name.dart';
 import 'package:app/core/widgets/botton.dart';
 import 'package:app/core/widgets/textformfeild.dart';
 import 'package:app/features/auth/presention/bloc/auth_bloc.dart';
 import 'package:app/features/auth/presention/bloc/auth_event.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:go_router/go_router.dart';
 
 class RegisterForms extends StatefulWidget {
   const RegisterForms({super.key});
@@ -16,10 +14,13 @@ class RegisterForms extends StatefulWidget {
 }
 
 class _RegisterFormsState extends State<RegisterForms> {
+  final formKey = GlobalKey<FormState>();
+
   final nameController = TextEditingController();
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
   final confirmPasswordController = TextEditingController();
+  final phoneController = TextEditingController();
 
   @override
   void dispose() {
@@ -27,120 +28,154 @@ class _RegisterFormsState extends State<RegisterForms> {
     emailController.dispose();
     passwordController.dispose();
     confirmPasswordController.dispose();
+    phoneController.dispose();
     super.dispose();
   }
 
   void register(BuildContext context) {
-    if (nameController.text.trim().isEmpty ||
-        emailController.text.trim().isEmpty ||
-        passwordController.text.isEmpty ||
-        confirmPasswordController.text.isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text("Please fill all fields"),
-        ),
-      );
-      return;
-    }
-
-    if (passwordController.text != confirmPasswordController.text) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text("Passwords do not match"),
-        ),
-      );
+    if (!formKey.currentState!.validate()) {
       return;
     }
 
     context.read<AuthBloc>().add(
-          SignUpRequested(
-            name: nameController.text.trim(),
-            email: emailController.text.trim(),
-            password: passwordController.text,
-          ),
-        );
+      SignUpRequested(
+        name: nameController.text.trim(),
+        email: emailController.text.trim(),
+        password: passwordController.text,
+      ),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16.0),
-          child: CustomTextForm(
-            controller: nameController,
-            hintText: "Name",
-            prefixIcon: Assets.icons.iden.image(),
-          ),
-        ),
-
-        const SizedBox(height: 24),
-
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16.0),
-          child: CustomTextForm(
-            controller: emailController,
-            hintText: "Email",
-            prefixIcon: Assets.icons.emailIcon.svg(),
-          ),
-        ),
-
-        const SizedBox(height: 24),
-
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16.0),
-          child: CustomTextForm(
-            controller: passwordController,
-            hintText: "Password",
-            obscureText: true,
-            prefixIcon: Assets.icons.passwordIcon.svg(),
-            suffixIcon: Assets.icons.hidden.image(
-              height: 20,
-              width: 20,
+    return Form(
+      key: formKey,
+      child: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16.0),
+            child: CustomTextForm(
+              controller: nameController,
+              hintText: "Name",
+              prefixIcon: Assets.icons.iden.image(),
+              validator: (value) {
+                if (value == null || value.trim().isEmpty) {
+                  return "Please enter your name";
+                }
+                return null;
+              },
             ),
           ),
-        ),
 
-        const SizedBox(height: 24),
+          const SizedBox(height: 24),
 
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16.0),
-          child: CustomTextForm(
-            controller: confirmPasswordController,
-            hintText: "Confirm Password",
-            obscureText: true,
-            prefixIcon: Assets.icons.passwordIcon.svg(),
-            suffixIcon: Assets.icons.hidden.image(
-              height: 20,
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16.0),
+            child: CustomTextForm(
+              controller: emailController,
+              hintText: "Email",
+              prefixIcon: Assets.icons.emailIcon.svg(),
+              validator: (value) {
+                if (value == null || value.trim().isEmpty) {
+                  return "Please enter your email";
+                }
+
+                if (!RegExp(
+                  r'^[\w\.-]+@([\w-]+\.)+[\w-]{2,4}$',
+                ).hasMatch(value.trim())) {
+                  return "Please enter a valid email";
+                }
+
+                return null;
+              },
             ),
           ),
-        ),
 
-        const SizedBox(height: 24),
+          const SizedBox(height: 24),
 
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16.0),
-          child: CustomTextForm(
-            hintText: "Phone Number",
-            prefixIcon: Assets.icons.phone.image(),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16.0),
+            child: CustomTextForm(
+              controller: passwordController,
+              hintText: "Password",
+              obscureText: true,
+              prefixIcon: Assets.icons.passwordIcon.svg(),
+              suffixIcon: Assets.icons.hidden.image(
+                height: 20,
+                width: 20,
+              ),
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return "Please enter your password";
+                }
+
+                if (value.length < 6) {
+                  return "Password must be at least 6 characters";
+                }
+
+                return null;
+              },
+            ),
           ),
-        ),
 
-        const SizedBox(height: 24),
+          const SizedBox(height: 24),
 
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16.0),
-          child: CustomButton(
-            text: "Create Account",
-            onPressed: () {
-              context.go(
-                              AppRoutesName.login,
-                            );
-              
-            },
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16.0),
+            child: CustomTextForm(
+              controller: confirmPasswordController,
+              hintText: "Confirm Password",
+              obscureText: true,
+              prefixIcon: Assets.icons.passwordIcon.svg(),
+              suffixIcon: Assets.icons.hidden.image(
+                height: 20,
+                width: 20,
+              ),
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return "Please confirm your password";
+                }
+
+                if (value != passwordController.text) {
+                  return "Passwords do not match";
+                }
+
+                return null;
+              },
+            ),
           ),
-        ),
-      ],
+
+          const SizedBox(height: 24),
+
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16.0),
+            child: CustomTextForm(
+              controller: phoneController,
+              hintText: "Phone Number",
+              prefixIcon: Assets.icons.phone.image(),
+              validator: (value) {
+                if (value == null || value.trim().isEmpty) {
+                  return "Please enter your phone number";
+                }
+
+                return null;
+              },
+            ),
+          ),
+
+          const SizedBox(height: 24),
+
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16.0),
+            child: CustomButton(
+              text: "Create Account",
+              onPressed: () {
+                register(context);
+              },
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

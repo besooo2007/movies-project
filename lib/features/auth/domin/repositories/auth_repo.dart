@@ -1,7 +1,5 @@
 import 'package:app/features/auth/domin/entities/user_entity.dart';
 
-
-
 abstract class AuthRepository {
   Future<UserEntity> signIn({
     required String email,
@@ -20,9 +18,14 @@ abstract class AuthRepository {
 
   Future<UserEntity> updateProfile({
     required String name,
+    required String phone,
     String? photoUrl,
   });
+
+  Future<UserEntity?> getUserProfile();
+
   Future<void> deleteAccount();
+
   Future<UserEntity> signInWithGoogle();
 
   UserEntity? getCurrentUser();
