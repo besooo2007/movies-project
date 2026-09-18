@@ -9,7 +9,7 @@ import 'package:app/core/model/onboarding/creat_watch_list.dart';
 import 'package:app/core/model/onboarding/rate_review.dart';
 import 'package:app/core/model/onboarding/start_watching.dart';
 import 'package:app/features/auth/presention/register/register_view.dart';
-import 'package:app/features/auth/profile/presention/update_profile/update_profile_view.dart';
+import 'package:app/features/auth/presention/profile/presention/update_profile/update_profile_view.dart';
 import 'package:app/features/home_api/presnation/bloc/ui/layout.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../../../../../../core/theme/AppColors.dart';
-import '../../../../../../core/gen/assets.gen.dart';
+import '../../../../../../../core/theme/AppColors.dart';
+import '../../../../../../../core/gen/assets.gen.dart';
 
 class AvatarBottomSheet extends StatefulWidget {
   final int selectedIndex;

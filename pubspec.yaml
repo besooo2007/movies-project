@@ -33,6 +33,7 @@ dependencies:
   # State Management
   bloc: ^9.2.1
   flutter_bloc: ^9.1.1
+  dio: ^5.11.1
 
 dev_dependencies:
   flutter_test:
