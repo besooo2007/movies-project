@@ -2,6 +2,7 @@ import 'package:app/core/model/login/login.dart';
 import 'package:app/core/model/onboarding/onboarding.dart';
 import 'package:app/core/model/splash/splash.dart';
 import 'package:app/feature/Register/presentation/ui/register_view.dart';
+import 'package:app/feature/browse%20tab/presentation/ui/browse_view.dart';
 import 'package:app/feature/forget%20password/presentation/ui/forget_password_view.dart';
 import 'package:app/feature/home/presentation/ui/layout.dart';
 import 'package:flutter/material.dart';
@@ -26,6 +27,8 @@ class AppRoutesManager {
         return MaterialPageRoute(builder: (_) => const ForgetView());
       case AppRoutesName.home:
         return MaterialPageRoute(builder: (_) => const MainLayout());
+        case AppRoutesName.BrowseView:
+        return MaterialPageRoute(builder: (_) => const BrowseView());
 
       default:
         return MaterialPageRoute(

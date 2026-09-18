@@ -5,4 +5,5 @@ class AppRoutesName {
   static const String register = "/register";
   static const String forgetPassword = "/forgetPassword";
   static const String home = "/home";
+  static const String BrowseView = "/BrowseView";
 }
