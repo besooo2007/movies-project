@@ -12,10 +12,11 @@ import 'package:app/features/auth/presention/register/register_view.dart';
 import 'package:app/features/profile/presention/update_profile/update_profile_view.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import '../../features/movie_details/presention/movie_details_view.dart';
 
 class AppRouter {
   static final GoRouter router = GoRouter(
-    initialLocation: AppRoutesName.updateProfile,
+    initialLocation: AppRoutesName.movieDetails,
 
     routes: [
       GoRoute(
@@ -65,6 +66,10 @@ class AppRouter {
       GoRoute(
         path: AppRoutesName.updateProfile,
         builder: (context, state) => const UpdateProfileView(),
+      ),
+      GoRoute(
+        path: AppRoutesName.movieDetails,
+        builder: (context, state) => const MovieDetailsView(),
       ),
     ],
 

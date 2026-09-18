@@ -36,6 +36,25 @@ class $AssetsIconsGen {
   /// File path: assets/icons/hidden.png
   AssetGenImage get hidden => const AssetGenImage('assets/icons/hidden.png');
 
+  /// File path: assets/icons/ic_back.svg
+  SvgGenImage get icBack => const SvgGenImage('assets/icons/ic_back.svg');
+
+  /// File path: assets/icons/ic_bookmark.svg
+  SvgGenImage get icBookmark =>
+      const SvgGenImage('assets/icons/ic_bookmark.svg');
+
+  /// File path: assets/icons/ic_clock.svg
+  SvgGenImage get icClock => const SvgGenImage('assets/icons/ic_clock.svg');
+
+  /// File path: assets/icons/ic_heart.svg
+  SvgGenImage get icHeart => const SvgGenImage('assets/icons/ic_heart.svg');
+
+  /// File path: assets/icons/ic_play.svg
+  SvgGenImage get icPlay => const SvgGenImage('assets/icons/ic_play.svg');
+
+  /// File path: assets/icons/ic_star.svg
+  SvgGenImage get icStar => const SvgGenImage('assets/icons/ic_star.svg');
+
   /// File path: assets/icons/icon _google.svg
   SvgGenImage get iconGoogle =>
       const SvgGenImage('assets/icons/icon _google.svg');
@@ -61,6 +80,12 @@ class $AssetsIconsGen {
     backArrowPng,
     emailIcon,
     hidden,
+    icBack,
+    icBookmark,
+    icClock,
+    icHeart,
+    icPlay,
+    icStar,
     iconGoogle,
     iden,
     passwordIcon,
@@ -117,6 +142,54 @@ class $AssetsImagesGen {
   /// File path: assets/images/avatar_9.png
   AssetGenImage get avatar9 =>
       const AssetGenImage('assets/images/avatar_9.png');
+
+  /// File path: assets/images/doctor_strange.png
+  AssetGenImage get doctorStrange =>
+      const AssetGenImage('assets/images/doctor_strange.png');
+
+  /// File path: assets/images/img_cast_1.png
+  AssetGenImage get imgCast1 =>
+      const AssetGenImage('assets/images/img_cast_1.png');
+
+  /// File path: assets/images/img_cast_2.png
+  AssetGenImage get imgCast2 =>
+      const AssetGenImage('assets/images/img_cast_2.png');
+
+  /// File path: assets/images/img_cast_3.png
+  AssetGenImage get imgCast3 =>
+      const AssetGenImage('assets/images/img_cast_3.png');
+
+  /// File path: assets/images/img_cast_4.png
+  AssetGenImage get imgCast4 =>
+      const AssetGenImage('assets/images/img_cast_4.png');
+
+  /// File path: assets/images/img_screenshot_1.png
+  AssetGenImage get imgScreenshot1 =>
+      const AssetGenImage('assets/images/img_screenshot_1.png');
+
+  /// File path: assets/images/img_screenshot_2.png
+  AssetGenImage get imgScreenshot2 =>
+      const AssetGenImage('assets/images/img_screenshot_2.png');
+
+  /// File path: assets/images/img_screenshot_3.png
+  AssetGenImage get imgScreenshot3 =>
+      const AssetGenImage('assets/images/img_screenshot_3.png');
+
+  /// File path: assets/images/img_similar_1.png
+  AssetGenImage get imgSimilar1 =>
+      const AssetGenImage('assets/images/img_similar_1.png');
+
+  /// File path: assets/images/img_similar_2.png
+  AssetGenImage get imgSimilar2 =>
+      const AssetGenImage('assets/images/img_similar_2.png');
+
+  /// File path: assets/images/img_similar_3.png
+  AssetGenImage get imgSimilar3 =>
+      const AssetGenImage('assets/images/img_similar_3.png');
+
+  /// File path: assets/images/img_similar_4.png
+  AssetGenImage get imgSimilar4 =>
+      const AssetGenImage('assets/images/img_similar_4.png');
 
   /// File path: assets/images/login_img.png
   AssetGenImage get loginImg =>
@@ -179,6 +252,18 @@ class $AssetsImagesGen {
     avatar7,
     avatar8,
     avatar9,
+    doctorStrange,
+    imgCast1,
+    imgCast2,
+    imgCast3,
+    imgCast4,
+    imgScreenshot1,
+    imgScreenshot2,
+    imgScreenshot3,
+    imgSimilar1,
+    imgSimilar2,
+    imgSimilar3,
+    imgSimilar4,
     loginImg,
     onBoarding1,
     onboarding2,
