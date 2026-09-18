@@ -1,20 +1,17 @@
-import 'package:app/features/movie_deatils/domin/entities/movies_deatils_entites.dart';
+import 'package:app/features/movie_deatils/domin/entities/similar_movie_entity.dart';
 import 'package:app/features/movie_deatils/domin/repositories/movies_repo.dart';
 
-
-class GetMovieDetails {
-
+class GetSimilarMovies {
   final MovieDetailsRepository repository;
 
-  GetMovieDetails(
+  GetSimilarMovies(
     this.repository,
   );
 
-  Future<MovieDetailsEntity> call(
+  Future<List<SimilarMovieEntity>> call(
     int movieId,
   ) async {
-
-    return await repository.getMovieDetails(
+    return await repository.getSimilarMovies(
       movieId,
     );
   }

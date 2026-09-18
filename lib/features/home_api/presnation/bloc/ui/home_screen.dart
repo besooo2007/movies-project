@@ -17,7 +17,10 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_) => homeGetIt<HomeBloc>()..add(GetMoviesRequested()),
+      create: (_) => homeGetIt<HomeBloc>()
+        ..add(
+          GetMoviesRequested(),
+        ),
       child: const _HomeScreen(),
     );
   }
@@ -51,7 +54,9 @@ class _HomeScreenState extends State<_HomeScreen> {
             return Center(
               child: Text(
                 state.message,
-                style: const TextStyle(color: Colors.white),
+                style: const TextStyle(
+                  color: Colors.white,
+                ),
               ),
             );
           }
@@ -63,60 +68,96 @@ class _HomeScreenState extends State<_HomeScreen> {
               return const Center(
                 child: Text(
                   'No movies found',
-                  style: TextStyle(color: Colors.white),
+                  style: TextStyle(
+                    color: Colors.white,
+                  ),
                 ),
               );
             }
 
             print('Movies from API: ${movies.length}');
             print('First movie: ${movies.first.title}');
-            print('Image: ${movies.first.largeCoverImage}');
-            print('Rating: ${movies.first.rating}');
+            print(
+              'Image: ${movies.first.largeCoverImage}',
+            );
+            print(
+              'Rating: ${movies.first.rating}',
+            );
 
             final carouselMovies = movies.take(10).toList();
 
             final actionMovies = movies.where((movie) {
               return movie.genres.any(
-                (genre) => genre.toLowerCase() == 'action',
+                (genre) =>
+                    genre.toLowerCase() == 'action',
               );
             }).toList();
 
             return SingleChildScrollView(
-              physics: const BouncingScrollPhysics(),
+              physics:
+                  const BouncingScrollPhysics(),
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+                crossAxisAlignment:
+                    CrossAxisAlignment.start,
                 children: [
                   Stack(
                     children: [
                       Positioned.fill(
                         child: AnimatedSwitcher(
-                          duration: const Duration(milliseconds: 500),
+                          duration: const Duration(
+                            milliseconds: 500,
+                          ),
                           child: Stack(
-                            key: ValueKey<int>(_currentPosterIndex),
+                            key: ValueKey<int>(
+                              _currentPosterIndex,
+                            ),
                             fit: StackFit.expand,
                             children: [
                               Image.network(
-                                carouselMovies[_currentPosterIndex]
+                                carouselMovies[
+                                        _currentPosterIndex]
                                     .backgroundImage,
                                 fit: BoxFit.cover,
-                                errorBuilder: (_, __, ___) {
+                                errorBuilder:
+                                    (_, __, ___) {
                                   return Container(
-                                    color: const Color(0xFF121312),
+                                    color: const Color(
+                                      0xFF121312,
+                                    ),
                                   );
                                 },
                               ),
                               Container(
-                                decoration: BoxDecoration(
-                                  gradient: LinearGradient(
-                                    begin: Alignment.topCenter,
-                                    end: Alignment.bottomCenter,
+                                decoration:
+                                    BoxDecoration(
+                                  gradient:
+                                      LinearGradient(
+                                    begin:
+                                        Alignment.topCenter,
+                                    end:
+                                        Alignment.bottomCenter,
                                     colors: [
-                                      Colors.black.withValues(alpha: 0.45),
-                                      Colors.black.withValues(alpha: 0.65),
-                                      const Color(0xCC121312),
-                                      const Color(0xFF121312),
+                                      Colors.black
+                                          .withValues(
+                                        alpha: 0.45,
+                                      ),
+                                      Colors.black
+                                          .withValues(
+                                        alpha: 0.65,
+                                      ),
+                                      const Color(
+                                        0xCC121312,
+                                      ),
+                                      const Color(
+                                        0xFF121312,
+                                      ),
                                     ],
-                                    stops: const [0.0, 0.4, 0.75, 1.0],
+                                    stops: const [
+                                      0.0,
+                                      0.4,
+                                      0.75,
+                                      1.0,
+                                    ],
                                   ),
                                 ),
                               ),
@@ -124,21 +165,38 @@ class _HomeScreenState extends State<_HomeScreen> {
                           ),
                         ),
                       ),
+
                       SafeArea(
                         bottom: false,
                         child: Column(
                           children: [
-                            const SizedBox(height: 12),
+                            const SizedBox(
+                              height: 12,
+                            ),
+
                             Center(
-                              child: Assets.images.availableNow.image(
+                              child: Assets
+                                  .images
+                                  .availableNow
+                                  .image(
                                 height: 93,
                                 fit: BoxFit.contain,
                               ),
                             ),
-                            const SizedBox(height: 16),
+
+                            const SizedBox(
+                              height: 16,
+                            ),
+
                             CarouselSlider.builder(
-                              itemCount: carouselMovies.length,
-                              itemBuilder: (context, index, realIndex) {
+                              itemCount:
+                                  carouselMovies.length,
+                              itemBuilder:
+                                  (
+                                context,
+                                index,
+                                realIndex,
+                              ) {
                                 return _buildCarouselCard(
                                   carouselMovies[index],
                                 );
@@ -149,18 +207,29 @@ class _HomeScreenState extends State<_HomeScreen> {
                                 viewportFraction: 0.58,
                                 enlargeCenterPage: true,
                                 enlargeFactor: 0.22,
-                                enableInfiniteScroll: true,
-                                onPageChanged: (index, reason) {
+                                enableInfiniteScroll:
+                                    true,
+                                onPageChanged:
+                                    (index, reason) {
                                   setState(() {
                                     _currentPosterIndex =
-                                        index % carouselMovies.length;
+                                        index %
+                                            carouselMovies
+                                                .length;
                                   });
                                 },
                               ),
                             ),
-                            const SizedBox(height: 16),
+
+                            const SizedBox(
+                              height: 16,
+                            ),
+
                             Center(
-                              child: Assets.images.watchNow.image(
+                              child: Assets
+                                  .images
+                                  .watchNow
+                                  .image(
                                 height: 146,
                                 fit: BoxFit.contain,
                               ),
@@ -170,35 +239,57 @@ class _HomeScreenState extends State<_HomeScreen> {
                       ),
                     ],
                   ),
-                  const SizedBox(height: 20),
+
+                  const SizedBox(
+                    height: 20,
+                  ),
+
                   Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                    padding:
+                        const EdgeInsets.symmetric(
+                      horizontal: 16.0,
+                    ),
                     child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      mainAxisAlignment:
+                          MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
                           'Action',
-                          style: theme.textTheme.bodyLarge!.copyWith(
-                            color: AppColors.textColor,
+                          style: theme.textTheme.bodyLarge!
+                              .copyWith(
+                            color:
+                                AppColors.textColor,
                           ),
                         ),
+
                         GestureDetector(
                           onTap: () {
-                            context.go(AppRoutesName.updateProfile);
+                            context.go(
+                              AppRoutesName
+                                  .updateProfile,
+                            );
                           },
                           child: Row(
-                            mainAxisSize: MainAxisSize.min,
+                            mainAxisSize:
+                                MainAxisSize.min,
                             children: [
                               Text(
                                 'See More',
-                                style: theme.textTheme.bodyLarge!.copyWith(
-                                  color: AppColors.bottoncolora,
+                                style: theme
+                                    .textTheme
+                                    .bodyLarge!
+                                    .copyWith(
+                                  color: AppColors
+                                      .bottoncolora,
                                 ),
                               ),
-                              const SizedBox(width: 4),
+                              const SizedBox(
+                                width: 4,
+                              ),
                               const Icon(
                                 Icons.arrow_forward,
-                                color: Color(0xFFF6BD00),
+                                color:
+                                    Color(0xFFF6BD00),
                                 size: 14,
                               ),
                             ],
@@ -207,21 +298,34 @@ class _HomeScreenState extends State<_HomeScreen> {
                       ],
                     ),
                   ),
-                  const SizedBox(height: 12),
+
+                  const SizedBox(
+                    height: 12,
+                  ),
+
                   SizedBox(
                     height: 180,
                     child: ListView.builder(
-                      scrollDirection: Axis.horizontal,
-                      padding: const EdgeInsets.symmetric(horizontal: 16),
-                      itemCount: actionMovies.length,
-                      itemBuilder: (context, index) {
+                      scrollDirection:
+                          Axis.horizontal,
+                      padding:
+                          const EdgeInsets.symmetric(
+                        horizontal: 16,
+                      ),
+                      itemCount:
+                          actionMovies.length,
+                      itemBuilder:
+                          (context, index) {
                         return _buildMovieCard(
                           actionMovies[index],
                         );
                       },
                     ),
                   ),
-                  const SizedBox(height: 100),
+
+                  const SizedBox(
+                    height: 100,
+                  ),
                 ],
               ),
             );
@@ -233,111 +337,177 @@ class _HomeScreenState extends State<_HomeScreen> {
     );
   }
 
-  Widget _buildCarouselCard(MovieEntity movie) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 6.0),
-      child: Stack(
-        children: [
-          ClipRRect(
-            borderRadius: BorderRadius.circular(16),
-            child: Image.network(
-              movie.largeCoverImage,
-              width: double.infinity,
-              height: double.infinity,
-              fit: BoxFit.cover,
-              errorBuilder: (_, __, ___) {
-                return Container(
-                  color: const Color(0xFF282A28),
-                );
-              },
-            ),
-          ),
-          Positioned(
-            top: 10,
-            left: 10,
-            child: Container(
-              padding: const EdgeInsets.symmetric(
-                horizontal: 8,
-                vertical: 4,
-              ),
-              decoration: BoxDecoration(
-                color: Colors.black.withValues(alpha: 0.6),
-                borderRadius: BorderRadius.circular(10),
-              ),
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Text(
-                    movie.rating.toString(),
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 12,
-                      fontWeight: FontWeight.bold,
+  // ============================
+  // Carousel Movie Card
+  // ============================
+
+  Widget _buildCarouselCard(
+    MovieEntity movie,
+  ) {
+    return GestureDetector(
+      onTap: () {
+        context.push(
+          '/movie-details/${movie.id}',
+        );
+      },
+      child: Padding(
+        padding:
+            const EdgeInsets.symmetric(
+          horizontal: 6.0,
+        ),
+        child: Stack(
+          children: [
+            ClipRRect(
+              borderRadius:
+                  BorderRadius.circular(16),
+              child: Image.network(
+                movie.largeCoverImage,
+                width: double.infinity,
+                height: double.infinity,
+                fit: BoxFit.cover,
+                errorBuilder: (_, __, ___) {
+                  return Container(
+                    color: const Color(
+                      0xFF282A28,
                     ),
-                  ),
-                  const SizedBox(width: 4),
-                  Assets.icons.star.image(width: 15),
-                ],
+                  );
+                },
               ),
             ),
-          ),
-        ],
+
+            Positioned(
+              top: 10,
+              left: 10,
+              child: Container(
+                padding:
+                    const EdgeInsets.symmetric(
+                  horizontal: 8,
+                  vertical: 4,
+                ),
+                decoration: BoxDecoration(
+                  color: Colors.black.withValues(
+                    alpha: 0.6,
+                  ),
+                  borderRadius:
+                      BorderRadius.circular(10),
+                ),
+                child: Row(
+                  mainAxisSize:
+                      MainAxisSize.min,
+                  children: [
+                    Text(
+                      movie.rating.toString(),
+                      style:
+                          const TextStyle(
+                        color: Colors.white,
+                        fontSize: 12,
+                        fontWeight:
+                            FontWeight.bold,
+                      ),
+                    ),
+
+                    const SizedBox(
+                      width: 4,
+                    ),
+
+                    Assets.icons.star.image(
+                      width: 15,
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
 
-  Widget _buildMovieCard(MovieEntity movie) {
-    return Container(
-      width: 120,
-      margin: const EdgeInsets.only(right: 12),
-      child: Stack(
-        children: [
-          ClipRRect(
-            borderRadius: BorderRadius.circular(12),
-            child: Image.network(
-              movie.largeCoverImage,
-              width: 120,
-              height: 180,
-              fit: BoxFit.cover,
-              errorBuilder: (_, __, ___) {
-                return Container(
-                  width: 120,
-                  height: 180,
-                  color: const Color(0xFF282A28),
-                );
-              },
-            ),
-          ),
-          Positioned(
-            top: 8,
-            left: 8,
-            child: Container(
-              padding: const EdgeInsets.symmetric(
-                horizontal: 6,
-                vertical: 3,
-              ),
-              decoration: BoxDecoration(
-                color: Colors.black.withValues(alpha: 0.6),
-                borderRadius: BorderRadius.circular(10),
-              ),
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Text(
-                    movie.rating.toString(),
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 11,
-                      fontWeight: FontWeight.bold,
+  // ============================
+  // Action Movie Card
+  // ============================
+
+  Widget _buildMovieCard(
+    MovieEntity movie,
+  ) {
+    return GestureDetector(
+      onTap: () {
+        context.push(
+          '/movie-details/${movie.id}',
+        );
+      },
+      child: Container(
+        width: 120,
+        margin:
+            const EdgeInsets.only(
+          right: 12,
+        ),
+        child: Stack(
+          children: [
+            ClipRRect(
+              borderRadius:
+                  BorderRadius.circular(12),
+              child: Image.network(
+                movie.largeCoverImage,
+                width: 120,
+                height: 180,
+                fit: BoxFit.cover,
+                errorBuilder: (_, __, ___) {
+                  return Container(
+                    width: 120,
+                    height: 180,
+                    color: const Color(
+                      0xFF282A28,
                     ),
-                  ),
-                  const SizedBox(width: 3),
-                  Assets.icons.star.image(width: 15),
-                ],
+                  );
+                },
               ),
             ),
-          ),
-        ],
+
+            Positioned(
+              top: 8,
+              left: 8,
+              child: Container(
+                padding:
+                    const EdgeInsets.symmetric(
+                  horizontal: 6,
+                  vertical: 3,
+                ),
+                decoration: BoxDecoration(
+                  color: Colors.black.withValues(
+                    alpha: 0.6,
+                  ),
+                  borderRadius:
+                      BorderRadius.circular(10),
+                ),
+                child: Row(
+                  mainAxisSize:
+                      MainAxisSize.min,
+                  children: [
+                    Text(
+                      movie.rating.toString(),
+                      style:
+                          const TextStyle(
+                        color: Colors.white,
+                        fontSize: 11,
+                        fontWeight:
+                            FontWeight.bold,
+                      ),
+                    ),
+
+                    const SizedBox(
+                      width: 3,
+                    ),
+
+                    Assets.icons.star.image(
+                      width: 15,
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
