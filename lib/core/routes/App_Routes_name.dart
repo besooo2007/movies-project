@@ -6,4 +6,6 @@ class AppRoutesName {
   static const String forgetPassword = "/forgetPassword";
   static const String home = "/home";
   static const String BrowseView = "/BrowseView";
+  static const String profile = "/profile";
+  static const String updateprofile = "/updateprofile";
 }

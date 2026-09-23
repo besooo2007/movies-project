@@ -17,7 +17,7 @@ class MyApp extends StatelessWidget {
 
       theme: ThemeData(scaffoldBackgroundColor: Colors.black),
 
-      initialRoute: AppRoutesName.home,
+      initialRoute: AppRoutesName.updateprofile,
       onGenerateRoute: AppRoutesManager.getRoute,
     );
   }

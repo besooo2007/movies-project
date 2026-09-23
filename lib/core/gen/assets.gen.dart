@@ -122,6 +122,9 @@ class $AssetsImagesGen {
   AssetGenImage get avatar3 =>
       const AssetGenImage('assets/images/avatar_3.png');
 
+  /// File path: assets/images/empty.png
+  AssetGenImage get empty => const AssetGenImage('assets/images/empty.png');
+
   /// File path: assets/images/login_img.png
   AssetGenImage get loginImg =>
       const AssetGenImage('assets/images/login_img.png');
@@ -167,6 +170,7 @@ class $AssetsImagesGen {
     avatar1,
     avatar2,
     avatar3,
+    empty,
     loginImg,
     poster1,
     poster2,

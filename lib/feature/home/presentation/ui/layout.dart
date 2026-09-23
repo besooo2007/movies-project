@@ -2,6 +2,7 @@ import 'package:app/core/gen/assets.gen.dart';
 import 'package:app/core/theme/AppColors.dart';
 import 'package:app/feature/browse%20tab/presentation/ui/browse_view.dart';
 import 'package:app/feature/home/presentation/ui/Home_Screen.dart';
+import 'package:app/feature/profile/presentation/ui/profile_view.dart';
 import 'package:flutter/material.dart';
 
 class MainLayout extends StatefulWidget {
@@ -24,12 +25,7 @@ class _MainLayoutState extends State<MainLayout> {
     const HomeScreen(),
 
     const BrowseView(),
-    const Center(
-      child: Text(
-        'Profile Screen',
-        style: TextStyle(color: Colors.white, fontSize: 18),
-      ),
-    ),
+    const ProfileView(),
   ];
 
   @override

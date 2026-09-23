@@ -5,6 +5,8 @@ import 'package:app/feature/Register/presentation/ui/register_view.dart';
 import 'package:app/feature/browse%20tab/presentation/ui/browse_view.dart';
 import 'package:app/feature/forget%20password/presentation/ui/forget_password_view.dart';
 import 'package:app/feature/home/presentation/ui/layout.dart';
+import 'package:app/feature/profile/presentation/ui/profile_view.dart';
+import 'package:app/feature/profile/presentation/ui/update_profile.dart';
 import 'package:flutter/material.dart';
 import 'package:app/core/routes/App_Routes_name.dart';
 
@@ -27,9 +29,12 @@ class AppRoutesManager {
         return MaterialPageRoute(builder: (_) => const ForgetView());
       case AppRoutesName.home:
         return MaterialPageRoute(builder: (_) => const MainLayout());
-        case AppRoutesName.BrowseView:
+      case AppRoutesName.BrowseView:
         return MaterialPageRoute(builder: (_) => const BrowseView());
-
+      case AppRoutesName.profile:
+        return MaterialPageRoute(builder: (_) => const ProfileView());
+      case AppRoutesName.updateprofile:
+        return MaterialPageRoute(builder: (_) => const UpdateProfileView());
       default:
         return MaterialPageRoute(
           builder: (_) =>
