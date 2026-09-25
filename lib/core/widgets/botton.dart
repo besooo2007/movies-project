@@ -6,6 +6,7 @@ class CustomButton extends StatelessWidget {
   final VoidCallback onPressed;
   final Widget? image;
   final Color? color;
+
   const CustomButton({
     super.key,
     required this.text,
@@ -17,14 +18,19 @@ class CustomButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+
     return ElevatedButton(
+      onPressed: onPressed,
       style: ElevatedButton.styleFrom(
         backgroundColor: color ?? AppColors.bottoncolora,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
-        minimumSize: const Size(double.infinity, 55),
+        minimumSize: const Size(0, 55),
+        padding: const EdgeInsets.symmetric(horizontal: 20),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(15),
+        ),
       ),
-      onPressed: onPressed,
       child: Row(
+        mainAxisSize: MainAxisSize.min,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           if (image != null) ...[
@@ -34,7 +40,9 @@ class CustomButton extends StatelessWidget {
           Text(
             text,
             style: theme.textTheme.bodyLarge?.copyWith(
-              color: color == AppColors.red ? Colors.white : AppColors.formcolor,
+              color: color == AppColors.red
+                  ? Colors.white
+                  : AppColors.formcolor,
               fontWeight: FontWeight.w400,
               fontSize: 20,
             ),

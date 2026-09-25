@@ -1,8 +1,8 @@
-import 'package:app/feature/browse%20tab/domain/entities/movie_entity.dart';
-import 'package:app/feature/browse%20tab/domain/repositories/browse_repository.dart';
-import 'package:app/feature/browse%20tab/domain/usecases/get_movies_usecase.dart';
-import 'package:app/feature/browse%20tab/presentation/controller/browse_cubit.dart';
-import 'package:app/feature/browse%20tab/presentation/controller/browse_state.dart';
+import 'package:app/features/browser/browse%20tab/domain/entities/movie_entity.dart';
+import 'package:app/features/browser/browse%20tab/domain/repositories/browse_repository.dart';
+import 'package:app/features/browser/browse%20tab/domain/usecases/get_movies_usecase.dart';
+import 'package:app/features/browser/browse%20tab/presentation/controller/browse_cubit.dart';
+import 'package:app/features/browser/browse%20tab/presentation/controller/browse_state.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 class FakeBrowseRepository implements BrowseRepository {

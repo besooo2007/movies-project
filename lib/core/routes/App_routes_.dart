@@ -23,7 +23,7 @@ import 'package:app/features/auth/presention/register/register_view.dart';
 import 'package:app/features/auth/presention/profile/presention/update_profile/update_profile_view.dart';
 
 import 'package:app/features/home_api/presnation/bloc/ui/layout.dart';
-import 'package:app/features/profile/ui/profile_view.dart';
+
 
 import 'package:flutter/material.dart';
 
@@ -39,7 +39,7 @@ class AppRouter {
       GoRoute(
         path: AppRoutesName.splash,
 
-        builder: (context, state) => const ProfileView(),
+        builder: (context, state) => const Splash(),
       ),
 
       GoRoute(
@@ -107,10 +107,7 @@ class AppRouter {
 
         builder: (context, state) => const MainLayout(),
       ),
-      GoRoute(  
-        path: AppRoutesName.profile,
-        builder: (context, state) => const ProfileView(),
-      ),
+      
 
       // Movie Details
       GoRoute(

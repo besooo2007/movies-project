@@ -14,5 +14,7 @@ class AppRoutesName {
   static const String updateProfile = '/update_profile';
   static const String profile = '/profile';
  static const String movieDetails = '/movie-details/:movieId';
+   static const String BrowseView = "/BrowseView";
 
 }
+

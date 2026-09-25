@@ -1,4 +1,4 @@
-import 'package:app/feature/browse%20tab/data/models/movie_model.dart';
+import 'package:app/features/browser/browse%20tab/data/models/movie_model.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
