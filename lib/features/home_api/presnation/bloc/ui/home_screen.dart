@@ -266,7 +266,7 @@ class _HomeScreenState extends State<_HomeScreen> {
                           onTap: () {
                             context.go(
                               AppRoutesName
-                                  .updateProfile,
+                                  .BrowseView,
                             );
                           },
                           child: Row(
@@ -337,9 +337,6 @@ class _HomeScreenState extends State<_HomeScreen> {
     );
   }
 
-  // ============================
-  // Carousel Movie Card
-  // ============================
 
   Widget _buildCarouselCard(
     MovieEntity movie,
@@ -423,9 +420,6 @@ class _HomeScreenState extends State<_HomeScreen> {
     );
   }
 
-  // ============================
-  // Action Movie Card
-  // ============================
 
   Widget _buildMovieCard(
     MovieEntity movie,

@@ -7,10 +7,7 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
   final FirebaseAuth firebaseAuth;
   final FirebaseFirestore firestore;
 
-  AuthRemoteDataSourceImpl(
-    this.firebaseAuth,
-    this.firestore,
-  );
+  AuthRemoteDataSourceImpl(this.firebaseAuth, this.firestore);
 
   @override
   Future<UserCredential> signIn({
@@ -29,8 +26,7 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
     required String email,
     required String password,
   }) async {
-    final credential =
-        await firebaseAuth.createUserWithEmailAndPassword(
+    final credential = await firebaseAuth.createUserWithEmailAndPassword(
       email: email,
       password: password,
     );
@@ -62,13 +58,11 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
       idToken: googleAuth.idToken,
     );
 
-    final userCredential =
-        await firebaseAuth.signInWithCredential(credential);
+    final userCredential = await firebaseAuth.signInWithCredential(credential);
 
     final user = userCredential.user!;
 
-    final userDoc =
-        await firestore.collection('users').doc(user.uid).get();
+    final userDoc = await firestore.collection('users').doc(user.uid).get();
 
     if (!userDoc.exists) {
       await firestore.collection('users').doc(user.uid).set({
@@ -84,12 +78,8 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
   }
 
   @override
-  Future<void> resetPassword({
-    required String email,
-  }) async {
-    await firebaseAuth.sendPasswordResetEmail(
-      email: email,
-    );
+  Future<void> resetPassword({required String email}) async {
+    await firebaseAuth.sendPasswordResetEmail(email: email);
   }
 
   @override
@@ -101,21 +91,18 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
     final user = firebaseAuth.currentUser;
 
     if (user == null) {
-      return;
+      throw Exception('User is not logged in');
     }
 
     await user.updateDisplayName(name);
 
-    await firestore.collection('users').doc(user.uid).set(
-      {
-        'id': user.uid,
-        'email': user.email ?? '',
-        'name': name,
-        'phone': phone,
-        'photoUrl': photoUrl ?? '',
-      },
-      SetOptions(merge: true),
-    );
+    await firestore.collection('users').doc(user.uid).set({
+      'id': user.uid,
+      'email': user.email ?? '',
+      'name': name,
+      'phone': phone,
+      'photoUrl': photoUrl ?? '',
+    }, SetOptions(merge: true));
 
     await user.reload();
   }
@@ -128,10 +115,7 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
       return null;
     }
 
-    final doc = await firestore
-        .collection('users')
-        .doc(user.uid)
-        .get();
+    final doc = await firestore.collection('users').doc(user.uid).get();
 
     if (!doc.exists) {
       return null;
@@ -145,7 +129,7 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
     final user = firebaseAuth.currentUser;
 
     if (user == null) {
-      return;
+      throw Exception('User is not logged in');
     }
 
     await firestore.collection('users').doc(user.uid).delete();

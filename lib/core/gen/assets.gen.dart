@@ -75,6 +75,9 @@ class $AssetsIconsGen {
   /// File path: assets/icons/phone.png
   AssetGenImage get phone => const AssetGenImage('assets/icons/phone.png');
 
+  /// File path: assets/icons/search.svg
+  SvgGenImage get search => const SvgGenImage('assets/icons/search.svg');
+
   /// File path: assets/icons/star.png
   AssetGenImage get star => const AssetGenImage('assets/icons/star.png');
 
@@ -101,6 +104,7 @@ class $AssetsIconsGen {
     iden,
     passwordIcon,
     phone,
+    search,
     star,
     user,
   ];
@@ -178,6 +182,9 @@ class $AssetsImagesGen {
   /// File path: assets/images/doctor_strange.png
   AssetGenImage get doctorStrange =>
       const AssetGenImage('assets/images/doctor_strange.png');
+
+  /// File path: assets/images/empty.png
+  AssetGenImage get empty => const AssetGenImage('assets/images/empty.png');
 
   /// File path: assets/images/img_cast_1.png
   AssetGenImage get imgCast1 =>
@@ -314,6 +321,7 @@ class $AssetsImagesGen {
     avatar8,
     avatar9,
     doctorStrange,
+    empty,
     imgCast1,
     imgCast2,
     imgCast3,

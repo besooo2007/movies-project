@@ -9,6 +9,10 @@ import 'package:app/features/movie_deatils/presntation/uii/widgets/hero_header_w
 import 'package:app/features/movie_deatils/presntation/uii/widgets/screenshots_widget.dart';
 import 'package:app/features/movie_deatils/presntation/uii/widgets/similar_movies_widget.dart';
 import 'package:app/features/movie_deatils/presntation/uii/widgets/summary_widget.dart';
+import 'package:app/features/profile_api/bloc/profile_bloc.dart';
+import 'package:app/features/profile_api/bloc/profile_event.dart';
+import 'package:app/features/profile_api/bloc/profile_state.dart';
+import 'package:app/features/profile_api/di/di_profile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -19,17 +23,37 @@ class MovieDetailsView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (_) =>
-          movieDetailsGetIt<MovieDetailsBloc>()
-            ..add(GetMovieDetailsEvent(movieId)),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<MovieDetailsBloc>(
+          create: (_) {
+            return movieDetailsGetIt<MovieDetailsBloc>()
+              ..add(GetMovieDetailsEvent(movieId));
+          },
+        ),
+
+        BlocProvider<ProfileBloc>(
+          create: (_) {
+            return profileGetIt<ProfileBloc>()..add(GetProfileRequested());
+          },
+        ),
+      ],
       child: const MovieDetailsBody(),
     );
   }
 }
 
-class MovieDetailsBody extends StatelessWidget {
+class MovieDetailsBody extends StatefulWidget {
   const MovieDetailsBody({super.key});
+
+  @override
+  State<MovieDetailsBody> createState() => _MovieDetailsBodyState();
+}
+
+class _MovieDetailsBodyState extends State<MovieDetailsBody> {
+  bool? _isSaved;
+
+  bool _historyAdded = false;
 
   @override
   Widget build(BuildContext context) {
@@ -37,12 +61,10 @@ class MovieDetailsBody extends StatelessWidget {
       backgroundColor: AppColors.background,
       body: BlocBuilder<MovieDetailsBloc, MovieDetailsState>(
         builder: (context, state) {
-          // Loading
           if (state is MovieDetailsLoading) {
             return const Center(child: CircularProgressIndicator());
           }
 
-          // Error
           if (state is MovieDetailsError) {
             return Center(
               child: Text(
@@ -55,20 +77,78 @@ class MovieDetailsBody extends StatelessWidget {
           if (state is MovieDetailsSuccess) {
             final movie = state.movie;
 
+            if (!_historyAdded) {
+              _historyAdded = true;
+
+              WidgetsBinding.instance.addPostFrameCallback((_) {
+                if (!mounted) return;
+
+                context.read<ProfileBloc>().add(
+                  AddMovieToHistory(movieId: movie.id),
+                );
+
+                debugPrint('🎬 ADDED TO HISTORY: ${movie.id}');
+              });
+            }
+
             return SingleChildScrollView(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // HERO
-                  HeroHeaderWidget(movie: movie),
+                  BlocListener<ProfileBloc, ProfileState>(
+                    listener: (context, profileState) {
+                      if (profileState is ProfileSuccess) {
+                        final saved = profileState.watchListIds.contains(
+                          movie.id,
+                        );
+
+                        if (_isSaved == null) {
+                          setState(() {
+                            _isSaved = saved;
+                          });
+                        }
+                      }
+
+                      if (profileState is ProfileFailure) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(content: Text(profileState.message)),
+                        );
+                      }
+                    },
+
+                    child: Builder(
+                      builder: (context) {
+                        final bool isSaved = _isSaved ?? false;
+
+                        return HeroHeaderWidget(
+                          movie: movie,
+
+                          isSaved: isSaved,
+
+                          onBookmarkTap: () {
+                            final profileBloc = context.read<ProfileBloc>();
+
+                            // Toggle value
+                            final bool newValue = !isSaved;
+
+                            setState(() {
+                              _isSaved = newValue;
+                            });
+
+                            profileBloc.add(
+                              AddMovieToWatchList(movieId: movie.id),
+                            );
+                          },
+                        );
+                      },
+                    ),
+                  ),
 
                   Padding(
-                    padding: const EdgeInsets.all(16.0),
+                    padding: const EdgeInsets.all(16),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const SizedBox(height: 8),
-
                         ScreenshotsWidget(screenshots: movie.screenshots),
 
                         const SizedBox(height: 24),
@@ -80,6 +160,7 @@ class MovieDetailsBody extends StatelessWidget {
                         SummaryWidget(summary: movie.description),
 
                         const SizedBox(height: 24),
+
                         CastWidget(cast: movie.cast),
 
                         const SizedBox(height: 24),

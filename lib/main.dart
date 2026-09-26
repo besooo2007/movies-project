@@ -3,6 +3,8 @@ import 'package:app/core/routes/App_routes_.dart';
 import 'package:app/features/auth/di/injection.dart';
 import 'package:app/features/home_api/di/injiction.dart';
 import 'package:app/features/movie_deatils/di/injection.dart';
+import 'package:app/features/profile_api/di/di_profile.dart';
+import 'package:app/features/search/di/search_injection.dart';
 
 
 import 'package:firebase_core/firebase_core.dart';
@@ -20,6 +22,8 @@ void main() async {
   setupAuthInjection();
   setupHomeInjection();
   setupMovieDetailsInjection();
+  setupProfileInjection();
+  setupSearchInjection();
 
   runApp(
     const MyApp(),

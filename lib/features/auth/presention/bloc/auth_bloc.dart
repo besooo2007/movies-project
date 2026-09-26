@@ -1,6 +1,5 @@
 import 'package:app/features/auth/domin/use_cases/delete_account_usecase.dart';
 import 'package:app/features/auth/domin/use_cases/get_update_usecase.dart';
-
 import 'package:app/features/auth/domin/use_cases/restpassword_usecase.dart';
 import 'package:app/features/auth/domin/use_cases/sign_in_usecase.dart';
 import 'package:app/features/auth/domin/use_cases/sign_up_usecase.dart';
@@ -39,39 +38,21 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     on<GetCurrentUserRequested>(_getCurrentUser);
   }
 
-  Future<void> _signIn(
-    SignInRequested event,
-    Emitter<AuthState> emit,
-  ) async {
+  Future<void> _signIn(SignInRequested event, Emitter<AuthState> emit) async {
     emit(AuthLoading());
 
     try {
-      final user = await signIn(
-        email: event.email,
-        password: event.password,
-      );
+      final user = await signIn(email: event.email, password: event.password);
 
-      emit(
-        AuthSuccess(
-          user: user,
-          message: 'Login successful',
-        ),
-      );
+      emit(AuthSuccess(user: user, message: 'Login successful'));
     } on FirebaseAuthException catch (e) {
       emit(AuthFailure(_getFirebaseError(e)));
     } catch (e) {
-      emit(
-        AuthFailure(
-          'Something went wrong',
-        ),
-      );
+      emit(AuthFailure(e.toString()));
     }
   }
 
-  Future<void> _signUp(
-    SignUpRequested event,
-    Emitter<AuthState> emit,
-  ) async {
+  Future<void> _signUp(SignUpRequested event, Emitter<AuthState> emit) async {
     emit(AuthLoading());
 
     try {
@@ -81,20 +62,11 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         password: event.password,
       );
 
-      emit(
-        AuthSuccess(
-          user: user,
-          message: 'Account created successfully',
-        ),
-      );
+      emit(AuthSuccess(user: user, message: 'Account created successfully'));
     } on FirebaseAuthException catch (e) {
       emit(AuthFailure(_getFirebaseError(e)));
     } catch (e) {
-      emit(
-        AuthFailure(
-          'Something went wrong',
-        ),
-      );
+      emit(AuthFailure(e.toString()));
     }
   }
 
@@ -107,20 +79,11 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     try {
       final user = await signInWithGoogle();
 
-      emit(
-        AuthSuccess(
-          user: user,
-          message: 'Google login successful',
-        ),
-      );
+      emit(AuthSuccess(user: user, message: 'Google login successful'));
     } on FirebaseAuthException catch (e) {
       emit(AuthFailure(_getFirebaseError(e)));
     } catch (e) {
-      emit(
-        AuthFailure(
-          'Something went wrong',
-        ),
-      );
+      emit(AuthFailure(e.toString()));
     }
   }
 
@@ -131,23 +94,13 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     emit(AuthLoading());
 
     try {
-      await resetPassword(
-        email: event.email,
-      );
+      await resetPassword(email: event.email);
 
-      emit(
-        AuthSuccess(
-          message: 'Password reset email sent',
-        ),
-      );
+      emit(AuthSuccess(message: 'Password reset email sent'));
     } on FirebaseAuthException catch (e) {
       emit(AuthFailure(_getFirebaseError(e)));
     } catch (e) {
-      emit(
-        AuthFailure(
-          'Something went wrong',
-        ),
-      );
+      emit(AuthFailure(e.toString()));
     }
   }
 
@@ -158,26 +111,17 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     emit(AuthLoading());
 
     try {
-      final user = await updateProfile(
+      await updateProfile(
         name: event.name,
         phone: event.phone,
         photoUrl: event.photoUrl,
       );
 
-      emit(
-        AuthSuccess(
-          user: user,
-          message: 'Profile updated successfully',
-        ),
-      );
+      emit(AuthSuccess(message: 'Profile updated successfully'));
     } on FirebaseAuthException catch (e) {
       emit(AuthFailure(_getFirebaseError(e)));
     } catch (e) {
-      emit(
-        AuthFailure(
-          'Something went wrong',
-        ),
-      );
+      emit(AuthFailure(e.toString()));
     }
   }
 
@@ -190,19 +134,11 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     try {
       await deleteAccount();
 
-      emit(
-        AuthSuccess(
-          message: 'Account deleted successfully',
-        ),
-      );
+      emit(AuthSuccess(message: 'Account deleted successfully'));
     } on FirebaseAuthException catch (e) {
       emit(AuthFailure(_getFirebaseError(e)));
     } catch (e) {
-      emit(
-        AuthFailure(
-          'Something went wrong',
-        ),
-      );
+      emit(AuthFailure(e.toString()));
     }
   }
 
@@ -216,27 +152,15 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       final user = await getUserProfile();
 
       if (user == null) {
-        emit(
-          AuthFailure(
-            'User not found',
-          ),
-        );
+        emit(AuthFailure('User not found'));
         return;
       }
 
-      emit(
-        AuthSuccess(
-          user: user,
-        ),
-      );
+      emit(AuthSuccess(user: user));
     } on FirebaseAuthException catch (e) {
       emit(AuthFailure(_getFirebaseError(e)));
     } catch (e) {
-      emit(
-        AuthFailure(
-          'Something went wrong',
-        ),
-      );
+      emit(AuthFailure(e.toString()));
     }
   }
 
@@ -244,26 +168,37 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     switch (e.code) {
       case 'invalid-credential':
         return 'Email or password is incorrect';
+
       case 'invalid-email':
         return 'Invalid email';
+
       case 'user-not-found':
         return 'User not found';
+
       case 'wrong-password':
         return 'Wrong password';
+
       case 'email-already-in-use':
         return 'Email already in use';
+
       case 'weak-password':
         return 'Password is too weak';
+
       case 'network-request-failed':
         return 'Check your internet connection';
+
       case 'too-many-requests':
         return 'Too many requests, try again later';
+
       case 'requires-recent-login':
         return 'Please login again before deleting your account';
+
       case 'popup-closed-by-user':
         return 'Google login was cancelled';
+
       case 'account-exists-with-different-credential':
         return 'This email is already registered with another login method';
+
       default:
         return e.message ?? 'Authentication failed';
     }

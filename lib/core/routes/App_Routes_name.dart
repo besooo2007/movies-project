@@ -13,7 +13,7 @@ class AppRoutesName {
   static const String createWatchList = '/create_watch_list';
   static const String updateProfile = '/update_profile';
   static const String profile = '/profile';
- static const String movieDetails = '/movie-details/:movieId';
+ static const String movieDetails = '/movie-details';
    static const String BrowseView = "/BrowseView";
 
 }
